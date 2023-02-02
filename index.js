@@ -1,8 +1,12 @@
 require("dotenv").config();
 let TOKEN = process.env.TOKEN;
 
+const help = require('./commands/help');
 const link = require('./commands/link');
 const unlink = require('./commands/unlink');
+const lastmatch = require('./commands/lastmatch');
+const mmr = require('./commands/mmr');
+const smurfs = require('./commands/smurfs');
 
 // Require the necessary discord.js classes
 const { Client, Events, GatewayIntentBits, messageLink } = require("discord.js");
@@ -27,11 +31,23 @@ client.once(Events.ClientReady, (c) => {
 });
 
 client.on('messageCreate', (message) => {
-    if (message.content.split(" ")[0] == '!link') {
+    if (message.content == '!help') {
+        help.helpCommand(message);
+    }
+    else if (message.content.split(" ")[0] == '!link') {
         link.linkCommand(message);
     }
     else if (message.content == '!unlink') {
         unlink.unlinkCommand(message);
+    }
+    else if (message.content.split(" ")[0] == '!lastmatch') {
+        lastmatch.lastmatchCommand(message);
+    }
+    else if (message.content == '!mmr') {
+        mmr.mmrCommand(message);
+    }
+    else if (message.content == '!smurfs') {
+        smurfs.smurfsCommand(message);
     }
 });
 
