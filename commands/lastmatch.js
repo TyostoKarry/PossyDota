@@ -3,12 +3,9 @@ const db = require("../db");
 const lobby_type = require("../lobby_type");
 const game_mode = require("../game_mode");
 const heroes = require("../heroes");
+const rank = require("../rank");
 const axios = require("axios");
-const {
-  EmbedBuilder,
-  AttachmentBuilder,
-  TextInputAssertions,
-} = require("discord.js");
+const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 
 const lastmatchCommand = async (message) => {
   let userToSearch,
@@ -32,15 +29,17 @@ const lastmatchCommand = async (message) => {
           match
       )
       .then((res) => {
-        return res.data[match - 1].match_id;
+        return res.data[match - 1];
       })
       .catch((err) => {
         message.reply("Error occured fething match ID.");
       });
+  } else {
+    message.reply("No user found. Please link using !link.");
   }
   if (matchID) {
     matchData = await axios
-      .get("https://api.opendota.com/api/matches/" + matchID)
+      .get("https://api.opendota.com/api/matches/" + matchID.match_id)
       .then((res) => {
         return res.data;
       })
@@ -57,6 +56,7 @@ const lastmatchCommand = async (message) => {
       .setTitle("MatchID: " + matchData.match_id)
       .setAuthor({ name: "PössyDota", iconURL: "attachment://dota2.jpg" })
       .addFields(
+        //Radiant
         {
           name:
             "Winner: " +
@@ -77,12 +77,9 @@ const lastmatchCommand = async (message) => {
               .slice(2)
               .join(" ") +
             "    Game mode: " +
-            game_mode[matchData.game_mode].name.split("_").slice(2).join(" "),
-          value: "\u200B",
-        },
-        //Radiant
-        {
-          name: "\u200B",
+            game_mode[matchData.game_mode].name.split("_").slice(2).join(" ") +
+            "    Average rank: " +
+            rank[matchID.average_rank].name,
           value:
             "```" +
             "ansi\n[2;32mRadiant:           K   D   A   NET     LH/DN  GPM/XPM     DMG[0m\n" +
@@ -255,7 +252,7 @@ const lastmatchCommand = async (message) => {
         },
         //Dire
         {
-          name: "\u200B",
+          name: " ",
           value:
             "```" +
             "ansi\n[2;31m[0m[2;31mDire:              K   D   A   NET     LH/DN  GPM/XPM     DMG[0m\n" +
@@ -430,7 +427,7 @@ const lastmatchCommand = async (message) => {
           name:
             "Dotabuff link: https://www.dotabuff.com/matches/" +
             matchData.match_id,
-          value: "\u200B",
+          value: " ",
         }
       )
       .setTimestamp();

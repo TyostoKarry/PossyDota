@@ -26,6 +26,7 @@ const help = require("./commands/help");
 const link = require("./commands/link");
 const unlink = require("./commands/unlink");
 const lastmatch = require("./commands/lastmatch");
+const matchhistory = require("./commands/matchhistory");
 const mmr = require("./commands/mmr");
 const smurfs = require("./commands/smurfs");
 
