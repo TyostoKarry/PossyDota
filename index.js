@@ -47,6 +47,11 @@ client.on("messageCreate", (message) => {
     message.content.split(" ")[0] == "!lm"
   ) {
     lastmatch.lastmatchCommand(message);
+  } else if (
+    message.content.split(" ")[0] == "!matchhistory" ||
+    message.content.split(" ")[0] == "!mh"
+  ) {
+    matchhistory.matchhistoryCommand(message);
   } else if (message.content == "!mmr") {
     mmr.mmrCommand(message);
   } else if (message.content == "!smurfs" || message.content == "!s") {

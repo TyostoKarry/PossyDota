@@ -80,16 +80,13 @@ const lastmatchCommand = async (message) => {
             game_mode[matchData.game_mode].name.split("_").slice(2).join(" "),
           value: "\u200B",
         },
-        {
-          name: "\u200B",
-          value:
-            "```ansi\n[2;32mRadiant:           K   D   A   NET     LH/DN  GPM/XPM     DMG[0m```",
-        },
-        //Hero 1
+        //Radiant
         {
           name: "\u200B",
           value:
             "```" +
+            "ansi\n[2;32mRadiant:           K   D   A   NET     LH/DN  GPM/XPM     DMG[0m\n" +
+            //Hero 1
             heroes[matchData.players[0].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[0].hero_id].localized_name.length
@@ -121,14 +118,8 @@ const lastmatchCommand = async (message) => {
                   .length
             ) +
             (matchData.players[0].hero_damage / 1000).toFixed(1) +
-            "k" +
-            "```",
-        },
-        //Hero 2
-        {
-          name: "\u200B",
-          value:
-            "```" +
+            "k\n" +
+            //Hero 2
             heroes[matchData.players[1].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[1].hero_id].localized_name.length
@@ -160,14 +151,8 @@ const lastmatchCommand = async (message) => {
                   .length
             ) +
             (matchData.players[1].hero_damage / 1000).toFixed(1) +
-            "k" +
-            "```",
-        },
-        //Hero 3
-        {
-          name: "\u200B",
-          value:
-            "```" +
+            "k\n" +
+            //Hero 3
             heroes[matchData.players[2].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[2].hero_id].localized_name.length
@@ -199,14 +184,8 @@ const lastmatchCommand = async (message) => {
                   .length
             ) +
             (matchData.players[2].hero_damage / 1000).toFixed(1) +
-            "k" +
-            "```",
-        },
-        //Hero 4
-        {
-          name: "\u200B",
-          value:
-            "```" +
+            "k\n" +
+            //Hero 4
             heroes[matchData.players[3].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[3].hero_id].localized_name.length
@@ -238,14 +217,8 @@ const lastmatchCommand = async (message) => {
                   .length
             ) +
             (matchData.players[3].hero_damage / 1000).toFixed(1) +
-            "k" +
-            "```",
-        },
-        //Hero 5
-        {
-          name: "\u200B",
-          value:
-            "```" +
+            "k\n" +
+            //Hero 5
             heroes[matchData.players[4].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[4].hero_id].localized_name.length
@@ -280,17 +253,13 @@ const lastmatchCommand = async (message) => {
             "k" +
             "```",
         },
-
-        {
-          name: "\u200B",
-          value:
-            "```ansi\n[2;31m[0m[2;31mDire:              K   D   A   NET     LH/DN  GPM/XPM     DMG[0m```",
-        },
-        //Hero 6
+        //Dire
         {
           name: "\u200B",
           value:
             "```" +
+            "ansi\n[2;31m[0m[2;31mDire:              K   D   A   NET     LH/DN  GPM/XPM     DMG[0m\n" +
+            //Hero 6
             heroes[matchData.players[5].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[5].hero_id].localized_name.length
@@ -322,14 +291,8 @@ const lastmatchCommand = async (message) => {
                   .length
             ) +
             (matchData.players[5].hero_damage / 1000).toFixed(1) +
-            "k" +
-            "```",
-        },
-        //Hero 7
-        {
-          name: "\u200B",
-          value:
-            "```" +
+            "k\n" +
+            //Hero 7
             heroes[matchData.players[6].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[6].hero_id].localized_name.length
@@ -361,14 +324,8 @@ const lastmatchCommand = async (message) => {
                   .length
             ) +
             (matchData.players[6].hero_damage / 1000).toFixed(1) +
-            "k" +
-            "```",
-        },
-        //Hero 8
-        {
-          name: "\u200B",
-          value:
-            "```" +
+            "k\n" +
+            //Hero 8
             heroes[matchData.players[7].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[7].hero_id].localized_name.length
@@ -400,14 +357,8 @@ const lastmatchCommand = async (message) => {
                   .length
             ) +
             (matchData.players[7].hero_damage / 1000).toFixed(1) +
-            "k" +
-            "```",
-        },
-        //Hero 9
-        {
-          name: "\u200B",
-          value:
-            "```" +
+            "k\n" +
+            //Hero 9
             heroes[matchData.players[8].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[8].hero_id].localized_name.length
@@ -439,14 +390,8 @@ const lastmatchCommand = async (message) => {
                   .length
             ) +
             (matchData.players[8].hero_damage / 1000).toFixed(1) +
-            "k" +
-            "```",
-        },
-        //Hero 10
-        {
-          name: "\u200B",
-          value:
-            "```" +
+            "k\n" +
+            //Hero 10
             heroes[matchData.players[9].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[9].hero_id].localized_name.length

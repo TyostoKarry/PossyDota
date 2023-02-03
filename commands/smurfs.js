@@ -69,7 +69,7 @@ const smurfsCommand = async (message) => {
             message.reply("Error occured fething rank data.");
           });
       } else {
-        winloss.push(null);
+        winloss.push(NaN);
         rankTier.push(00);
       }
     }
@@ -81,20 +81,17 @@ const smurfsCommand = async (message) => {
       .setTitle("Smurfs?")
       .setAuthor({ name: "PössyDota", iconURL: "attachment://dota2.jpg" })
       .addFields(
-        {
-          name: "\u200B",
-          value: "```ansi\n[2;32mRadiant:           Games           rank   w/l%[0m```",
-        },
-        // Hero 1
+        // Radiant heroes 1-5
         {
           name: "\u200B",
           value:
             "```" +
+            "ansi\n[2;32mRadiant:           Games           rank   w/l%[0m\n" +
             heroes[matchData.players[0].hero_id].localized_name +
             " ".repeat(
-              20 - heroes[matchData.players[0].hero_id].localized_name.length
+              19 - heroes[matchData.players[0].hero_id].localized_name.length
             ) +
-            " ".repeat(5 - (winloss[0].win + winloss[0].lose).length) +
+            " ".repeat(5 - String(winloss[0].win + winloss[0].lose).length) +
             (winloss[0].win + winloss[0].lose) +
             " ".repeat(15 - rank[rankTier[0]].name.length) +
             rank[rankTier[0]].name +
@@ -105,6 +102,176 @@ const smurfsCommand = async (message) => {
             ) +
             (
               (winloss[0].win / (winloss[0].win + winloss[0].lose)) *
+              100
+            ).toFixed(1) +
+            "%\n" +
+            heroes[matchData.players[1].hero_id].localized_name +
+            " ".repeat(
+              19 - heroes[matchData.players[1].hero_id].localized_name.length
+            ) +
+            " ".repeat(5 - String(winloss[1].win + winloss[1].lose).length) +
+            (winloss[1].win + winloss[1].lose) +
+            " ".repeat(15 - rank[rankTier[1]].name.length) +
+            rank[rankTier[1]].name +
+            " ".repeat(
+              5 -
+                (winloss[1].win / (winloss[1].win + winloss[1].lose)).toFixed(1)
+                  .length
+            ) +
+            (
+              (winloss[1].win / (winloss[1].win + winloss[1].lose)) *
+              100
+            ).toFixed(1) +
+            "%\n" +
+            heroes[matchData.players[2].hero_id].localized_name +
+            " ".repeat(
+              19 - heroes[matchData.players[2].hero_id].localized_name.length
+            ) +
+            " ".repeat(5 - String(winloss[2].win + winloss[2].lose).length) +
+            (winloss[2].win + winloss[2].lose) +
+            " ".repeat(15 - rank[rankTier[2]].name.length) +
+            rank[rankTier[2]].name +
+            " ".repeat(
+              5 -
+                (winloss[2].win / (winloss[2].win + winloss[2].lose)).toFixed(1)
+                  .length
+            ) +
+            (
+              (winloss[2].win / (winloss[2].win + winloss[2].lose)) *
+              100
+            ).toFixed(1) +
+            "%\n" +
+            heroes[matchData.players[3].hero_id].localized_name +
+            " ".repeat(
+              19 - heroes[matchData.players[3].hero_id].localized_name.length
+            ) +
+            " ".repeat(5 - String(winloss[3].win + winloss[3].lose).length) +
+            (winloss[3].win + winloss[3].lose) +
+            " ".repeat(15 - rank[rankTier[3]].name.length) +
+            rank[rankTier[3]].name +
+            " ".repeat(
+              5 -
+                (winloss[3].win / (winloss[3].win + winloss[3].lose)).toFixed(1)
+                  .length
+            ) +
+            (
+              (winloss[3].win / (winloss[3].win + winloss[3].lose)) *
+              100
+            ).toFixed(1) +
+            "%\n" +
+            heroes[matchData.players[4].hero_id].localized_name +
+            " ".repeat(
+              19 - heroes[matchData.players[4].hero_id].localized_name.length
+            ) +
+            " ".repeat(5 - String(winloss[4].win + winloss[4].lose).length) +
+            (winloss[4].win + winloss[4].lose) +
+            " ".repeat(15 - rank[rankTier[4]].name.length) +
+            rank[rankTier[4]].name +
+            " ".repeat(
+              5 -
+                (winloss[4].win / (winloss[4].win + winloss[4].lose)).toFixed(1)
+                  .length
+            ) +
+            (
+              (winloss[4].win / (winloss[4].win + winloss[4].lose)) *
+              100
+            ).toFixed(1) +
+            "%" +
+            "```",
+        },
+        // Dire heroes 6-7
+        {
+          name: "\u200B",
+          value:
+            "```" +
+            "ansi\n[2;31m[0m[2;31mDire:              Games           rank   w/l%[0m\n" +
+            heroes[matchData.players[5].hero_id].localized_name +
+            " ".repeat(
+              19 - heroes[matchData.players[5].hero_id].localized_name.length
+            ) +
+            " ".repeat(5 - String(winloss[5].win + winloss[5].lose).length) +
+            (winloss[5].win + winloss[5].lose) +
+            " ".repeat(15 - rank[rankTier[5]].name.length) +
+            rank[rankTier[5]].name +
+            " ".repeat(
+              5 -
+                (winloss[5].win / (winloss[5].win + winloss[5].lose)).toFixed(1)
+                  .length
+            ) +
+            (
+              (winloss[5].win / (winloss[5].win + winloss[5].lose)) *
+              100
+            ).toFixed(1) +
+            "%\n" +
+            heroes[matchData.players[6].hero_id].localized_name +
+            " ".repeat(
+              19 - heroes[matchData.players[6].hero_id].localized_name.length
+            ) +
+            " ".repeat(5 - String(winloss[6].win + winloss[6].lose).length) +
+            (winloss[6].win + winloss[6].lose) +
+            " ".repeat(15 - rank[rankTier[6]].name.length) +
+            rank[rankTier[6]].name +
+            " ".repeat(
+              5 -
+                (winloss[6].win / (winloss[6].win + winloss[6].lose)).toFixed(1)
+                  .length
+            ) +
+            (
+              (winloss[6].win / (winloss[6].win + winloss[6].lose)) *
+              100
+            ).toFixed(1) +
+            "%\n" +
+            heroes[matchData.players[7].hero_id].localized_name +
+            " ".repeat(
+              19 - heroes[matchData.players[7].hero_id].localized_name.length
+            ) +
+            " ".repeat(5 - String(winloss[7].win + winloss[7].lose).length) +
+            (winloss[7].win + winloss[7].lose) +
+            " ".repeat(15 - rank[rankTier[7]].name.length) +
+            rank[rankTier[7]].name +
+            " ".repeat(
+              5 -
+                (winloss[7].win / (winloss[7].win + winloss[7].lose)).toFixed(1)
+                  .length
+            ) +
+            (
+              (winloss[7].win / (winloss[7].win + winloss[7].lose)) *
+              100
+            ).toFixed(1) +
+            "%\n" +
+            heroes[matchData.players[8].hero_id].localized_name +
+            " ".repeat(
+              19 - heroes[matchData.players[8].hero_id].localized_name.length
+            ) +
+            " ".repeat(5 - String(winloss[8].win + winloss[8].lose).length) +
+            (winloss[8].win + winloss[8].lose) +
+            " ".repeat(15 - rank[rankTier[8]].name.length) +
+            rank[rankTier[8]].name +
+            " ".repeat(
+              5 -
+                (winloss[8].win / (winloss[8].win + winloss[8].lose)).toFixed(1)
+                  .length
+            ) +
+            (
+              (winloss[8].win / (winloss[8].win + winloss[8].lose)) *
+              100
+            ).toFixed(1) +
+            "%\n" +
+            heroes[matchData.players[9].hero_id].localized_name +
+            " ".repeat(
+              19 - heroes[matchData.players[9].hero_id].localized_name.length
+            ) +
+            " ".repeat(5 - String(winloss[9].win + winloss[9].lose).length) +
+            (winloss[9].win + winloss[9].lose) +
+            " ".repeat(15 - rank[rankTier[9]].name.length) +
+            rank[rankTier[9]].name +
+            " ".repeat(
+              5 -
+                (winloss[9].win / (winloss[9].win + winloss[9].lose)).toFixed(1)
+                  .length
+            ) +
+            (
+              (winloss[9].win / (winloss[9].win + winloss[9].lose)) *
               100
             ).toFixed(1) +
             "%" +
