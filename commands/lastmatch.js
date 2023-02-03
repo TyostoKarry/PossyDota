@@ -11,12 +11,15 @@ const {
 } = require("discord.js");
 
 const lastmatchCommand = async (message) => {
-  let userToSearch, match, matchID, matchData, winner;
-  if (message.content.split(" ")[1]) {
-    match = message.content.split(" ")[1];
-  } else {
-    match = 1;
-  }
+  let userToSearch,
+    match,
+    matchID,
+    matchData,
+    winner,
+    parameter1 = message.content.split(" ")[1];
+  if (parameter1 < 1) match = 1;
+  else if (parameter1) match = parameter1;
+  else match = 1;
   db.Users.forEach((user) => {
     if (user.DiscordID == message.author.id) userToSearch = user;
   });

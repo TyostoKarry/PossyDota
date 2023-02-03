@@ -8,22 +8,24 @@ const linkCommand = (message) => {
     SteamID: message.content.split(" ")[1],
     DiscordID: message.author.id,
   };
-  let exists = false;
   let duplicateUser;
-  db.Users.forEach((user) => {
-    if (user.DiscordID == message.author.id) {
-      exists = true;
-      duplicateUser = user.SteamID;
-    }
-  });
-  if (!exists) {
-    db.Users.push(user);
-    fs.writeFile("./db.json", JSON.stringify(db, null, 2), function (err) {
-      if (err) throw err;
-      message.reply("User link successfull.");
+  if (user.SteamID) {
+    db.Users.forEach((user) => {
+      if (user.DiscordID == message.author.id) {
+        duplicateUser = user.SteamID;
+      }
     });
+    if (!duplicateUser) {
+      db.Users.push(user);
+      fs.writeFile("./db.json", JSON.stringify(db, null, 2), function (err) {
+        if (err) throw err;
+        message.reply("User link successfull.");
+      });
+    } else {
+      message.reply("User already linked with Steam32 ID: " + duplicateUser);
+    }
   } else {
-    message.reply("User already linked with Steam32 ID: " + duplicateUser);
+    message.reply("Please input your Steam32 ID: !link [Steam32 ID].");
   }
 };
 

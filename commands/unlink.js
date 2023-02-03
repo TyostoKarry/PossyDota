@@ -20,7 +20,7 @@ const unlinkCommand = (message) => {
       message.reply("Unlink successfull.");
     });
   } else {
-    message.reply("No user with discord id: " + message.author.id);
+    message.reply("No user with discord ID: " + message.author.id);
   }
 };
 
