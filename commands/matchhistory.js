@@ -7,6 +7,7 @@ const axios = require("axios");
 const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 
 const matchhistoryCommand = async (message) => {
+  let reply = await message.reply("Fetching!");
   let userToSearch,
     matchID = [];
   db.Users.forEach((user) => {
@@ -29,10 +30,10 @@ const matchhistoryCommand = async (message) => {
         );
       })
       .catch((err) => {
-        message.reply("Error occured fething match ID.");
+        reply.edit({ content: "Error occured fething match ID." });
       });
   } else {
-    message.reply("No user found. Please link using !link.");
+    reply.edit({ content: "No user found. Please link using !link." });
   }
   if (matchID.length == 5) {
     const attachment = new AttachmentBuilder("./assets/dota2.jpg", "dota2.jpg");
@@ -209,7 +210,7 @@ const matchhistoryCommand = async (message) => {
       )
       .setTimestamp();
 
-    message.reply({ embeds: [exampleEmbed], files: [attachment] });
+    reply.edit({ content: "", embeds: [exampleEmbed], files: [attachment] });
   }
 };
 

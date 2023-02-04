@@ -8,6 +8,7 @@ const axios = require("axios");
 const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 
 const lastmatchCommand = async (message) => {
+  let reply = await message.reply("Fetching!");
   let userToSearch,
     match,
     matchID,
@@ -32,10 +33,10 @@ const lastmatchCommand = async (message) => {
         return res.data[match - 1];
       })
       .catch((err) => {
-        message.reply("Error occured fething match ID.");
+        reply.edit({ content: "Error occured fething match ID." });
       });
   } else {
-    message.reply("No user found. Please link using !link.");
+    reply.edit({ content: "No user found. Please link using !link." });
   }
   if (matchID) {
     matchData = await axios
@@ -44,7 +45,7 @@ const lastmatchCommand = async (message) => {
         return res.data;
       })
       .catch((err) => {
-        message.reply("Error occured fething match data.");
+        reply.edit({ content: "Error occured fething match data." });
       });
   }
   if (matchData) {
@@ -82,23 +83,23 @@ const lastmatchCommand = async (message) => {
             rank[matchID.average_rank].name,
           value:
             "```" +
-            "ansi\n[2;32mRadiant:           K   D   A   NET     LH/DN  GPM/XPM     DMG[0m\n" +
+            "ansi\n[2;32mRadiant:              K   D   A   NET  LH/DN  GPM/XPM     DMG[0m\n" +
             //Hero 1
             heroes[matchData.players[0].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[0].hero_id].localized_name.length
             ) +
-            matchData.players[0].kills +
             " ".repeat(4 - String(matchData.players[0].kills).length) +
-            matchData.players[0].deaths +
+            matchData.players[0].kills +
             " ".repeat(4 - String(matchData.players[0].deaths).length) +
-            matchData.players[0].assists +
+            matchData.players[0].deaths +
             " ".repeat(4 - String(matchData.players[0].assists).length) +
-            (matchData.players[0].net_worth / 1000).toFixed(1) +
-            "k" +
+            matchData.players[0].assists +
             " ".repeat(
               5 - (matchData.players[0].net_worth / 1000).toFixed(1).length
             ) +
+            (matchData.players[0].net_worth / 1000).toFixed(1) +
+            "k" +
             " ".repeat(4 - String(matchData.players[0].last_hits).length) +
             matchData.players[0].last_hits +
             "/" +
@@ -121,17 +122,17 @@ const lastmatchCommand = async (message) => {
             " ".repeat(
               19 - heroes[matchData.players[1].hero_id].localized_name.length
             ) +
-            matchData.players[1].kills +
             " ".repeat(4 - String(matchData.players[1].kills).length) +
-            matchData.players[1].deaths +
+            matchData.players[1].kills +
             " ".repeat(4 - String(matchData.players[1].deaths).length) +
-            matchData.players[1].assists +
+            matchData.players[1].deaths +
             " ".repeat(4 - String(matchData.players[1].assists).length) +
-            (matchData.players[1].net_worth / 1000).toFixed(1) +
-            "k" +
+            matchData.players[1].assists +
             " ".repeat(
               5 - (matchData.players[1].net_worth / 1000).toFixed(1).length
             ) +
+            (matchData.players[1].net_worth / 1000).toFixed(1) +
+            "k" +
             " ".repeat(4 - String(matchData.players[1].last_hits).length) +
             matchData.players[1].last_hits +
             "/" +
@@ -154,17 +155,17 @@ const lastmatchCommand = async (message) => {
             " ".repeat(
               19 - heroes[matchData.players[2].hero_id].localized_name.length
             ) +
-            matchData.players[2].kills +
             " ".repeat(4 - String(matchData.players[2].kills).length) +
-            matchData.players[2].deaths +
+            matchData.players[2].kills +
             " ".repeat(4 - String(matchData.players[2].deaths).length) +
-            matchData.players[2].assists +
+            matchData.players[2].deaths +
             " ".repeat(4 - String(matchData.players[2].assists).length) +
-            (matchData.players[2].net_worth / 1000).toFixed(1) +
-            "k" +
+            matchData.players[2].assists +
             " ".repeat(
               5 - (matchData.players[2].net_worth / 1000).toFixed(1).length
             ) +
+            (matchData.players[2].net_worth / 1000).toFixed(1) +
+            "k" +
             " ".repeat(4 - String(matchData.players[2].last_hits).length) +
             matchData.players[2].last_hits +
             "/" +
@@ -187,17 +188,17 @@ const lastmatchCommand = async (message) => {
             " ".repeat(
               19 - heroes[matchData.players[3].hero_id].localized_name.length
             ) +
-            matchData.players[3].kills +
             " ".repeat(4 - String(matchData.players[3].kills).length) +
-            matchData.players[3].deaths +
+            matchData.players[3].kills +
             " ".repeat(4 - String(matchData.players[3].deaths).length) +
-            matchData.players[3].assists +
+            matchData.players[3].deaths +
             " ".repeat(4 - String(matchData.players[3].assists).length) +
-            (matchData.players[3].net_worth / 1000).toFixed(1) +
-            "k" +
+            matchData.players[3].assists +
             " ".repeat(
               5 - (matchData.players[3].net_worth / 1000).toFixed(1).length
             ) +
+            (matchData.players[3].net_worth / 1000).toFixed(1) +
+            "k" +
             " ".repeat(4 - String(matchData.players[3].last_hits).length) +
             matchData.players[3].last_hits +
             "/" +
@@ -220,17 +221,17 @@ const lastmatchCommand = async (message) => {
             " ".repeat(
               19 - heroes[matchData.players[4].hero_id].localized_name.length
             ) +
-            matchData.players[4].kills +
             " ".repeat(4 - String(matchData.players[4].kills).length) +
-            matchData.players[4].deaths +
+            matchData.players[4].kills +
             " ".repeat(4 - String(matchData.players[4].deaths).length) +
-            matchData.players[4].assists +
+            matchData.players[4].deaths +
             " ".repeat(4 - String(matchData.players[4].assists).length) +
-            (matchData.players[4].net_worth / 1000).toFixed(1) +
-            "k" +
+            matchData.players[4].assists +
             " ".repeat(
               5 - (matchData.players[4].net_worth / 1000).toFixed(1).length
             ) +
+            (matchData.players[4].net_worth / 1000).toFixed(1) +
+            "k" +
             " ".repeat(4 - String(matchData.players[4].last_hits).length) +
             matchData.players[4].last_hits +
             "/" +
@@ -255,23 +256,23 @@ const lastmatchCommand = async (message) => {
           name: " ",
           value:
             "```" +
-            "ansi\n[2;31m[0m[2;31mDire:              K   D   A   NET     LH/DN  GPM/XPM     DMG[0m\n" +
+            "ansi\n[2;31m[0m[2;31mDire:                 K   D   A   NET  LH/DN  GPM/XPM     DMG[0m\n" +
             //Hero 6
             heroes[matchData.players[5].hero_id].localized_name +
             " ".repeat(
               19 - heroes[matchData.players[5].hero_id].localized_name.length
             ) +
-            matchData.players[5].kills +
             " ".repeat(4 - String(matchData.players[5].kills).length) +
-            matchData.players[5].deaths +
+            matchData.players[5].kills +
             " ".repeat(4 - String(matchData.players[5].deaths).length) +
-            matchData.players[5].assists +
+            matchData.players[5].deaths +
             " ".repeat(4 - String(matchData.players[5].assists).length) +
-            (matchData.players[5].net_worth / 1000).toFixed(1) +
-            "k" +
+            matchData.players[5].assists +
             " ".repeat(
               5 - (matchData.players[5].net_worth / 1000).toFixed(1).length
             ) +
+            (matchData.players[5].net_worth / 1000).toFixed(1) +
+            "k" +
             " ".repeat(4 - String(matchData.players[5].last_hits).length) +
             matchData.players[5].last_hits +
             "/" +
@@ -294,17 +295,17 @@ const lastmatchCommand = async (message) => {
             " ".repeat(
               19 - heroes[matchData.players[6].hero_id].localized_name.length
             ) +
-            matchData.players[6].kills +
             " ".repeat(4 - String(matchData.players[6].kills).length) +
-            matchData.players[6].deaths +
+            matchData.players[6].kills +
             " ".repeat(4 - String(matchData.players[6].deaths).length) +
-            matchData.players[6].assists +
+            matchData.players[6].deaths +
             " ".repeat(4 - String(matchData.players[6].assists).length) +
-            (matchData.players[6].net_worth / 1000).toFixed(1) +
-            "k" +
+            matchData.players[6].assists +
             " ".repeat(
               5 - (matchData.players[6].net_worth / 1000).toFixed(1).length
             ) +
+            (matchData.players[6].net_worth / 1000).toFixed(1) +
+            "k" +
             " ".repeat(4 - String(matchData.players[6].last_hits).length) +
             matchData.players[6].last_hits +
             "/" +
@@ -327,17 +328,17 @@ const lastmatchCommand = async (message) => {
             " ".repeat(
               19 - heroes[matchData.players[7].hero_id].localized_name.length
             ) +
-            matchData.players[7].kills +
             " ".repeat(4 - String(matchData.players[7].kills).length) +
-            matchData.players[7].deaths +
+            matchData.players[7].kills +
             " ".repeat(4 - String(matchData.players[7].deaths).length) +
-            matchData.players[7].assists +
+            matchData.players[7].deaths +
             " ".repeat(4 - String(matchData.players[7].assists).length) +
-            (matchData.players[7].net_worth / 1000).toFixed(1) +
-            "k" +
+            matchData.players[7].assists +
             " ".repeat(
               5 - (matchData.players[7].net_worth / 1000).toFixed(1).length
             ) +
+            (matchData.players[7].net_worth / 1000).toFixed(1) +
+            "k" +
             " ".repeat(4 - String(matchData.players[7].last_hits).length) +
             matchData.players[7].last_hits +
             "/" +
@@ -360,17 +361,17 @@ const lastmatchCommand = async (message) => {
             " ".repeat(
               19 - heroes[matchData.players[8].hero_id].localized_name.length
             ) +
-            matchData.players[8].kills +
             " ".repeat(4 - String(matchData.players[8].kills).length) +
-            matchData.players[8].deaths +
+            matchData.players[8].kills +
             " ".repeat(4 - String(matchData.players[8].deaths).length) +
-            matchData.players[8].assists +
+            matchData.players[8].deaths +
             " ".repeat(4 - String(matchData.players[8].assists).length) +
-            (matchData.players[8].net_worth / 1000).toFixed(1) +
-            "k" +
+            matchData.players[8].assists +
             " ".repeat(
               5 - (matchData.players[8].net_worth / 1000).toFixed(1).length
             ) +
+            (matchData.players[8].net_worth / 1000).toFixed(1) +
+            "k" +
             " ".repeat(4 - String(matchData.players[8].last_hits).length) +
             matchData.players[8].last_hits +
             "/" +
@@ -393,17 +394,17 @@ const lastmatchCommand = async (message) => {
             " ".repeat(
               19 - heroes[matchData.players[9].hero_id].localized_name.length
             ) +
-            matchData.players[9].kills +
             " ".repeat(4 - String(matchData.players[9].kills).length) +
-            matchData.players[9].deaths +
+            matchData.players[9].kills +
             " ".repeat(4 - String(matchData.players[9].deaths).length) +
-            matchData.players[9].assists +
+            matchData.players[9].deaths +
             " ".repeat(4 - String(matchData.players[9].assists).length) +
-            (matchData.players[9].net_worth / 1000).toFixed(1) +
-            "k" +
+            matchData.players[9].assists +
             " ".repeat(
               5 - (matchData.players[9].net_worth / 1000).toFixed(1).length
             ) +
+            (matchData.players[9].net_worth / 1000).toFixed(1) +
+            "k" +
             " ".repeat(4 - String(matchData.players[9].last_hits).length) +
             matchData.players[9].last_hits +
             "/" +
@@ -432,7 +433,7 @@ const lastmatchCommand = async (message) => {
       )
       .setTimestamp();
 
-    message.reply({ embeds: [exampleEmbed], files: [attachment] });
+    reply.edit({ content: "", embeds: [exampleEmbed], files: [attachment] });
   }
 };
 

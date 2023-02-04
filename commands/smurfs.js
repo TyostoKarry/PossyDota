@@ -10,6 +10,7 @@ const {
 } = require("discord.js");
 
 const smurfsCommand = async (message) => {
+  const reply = await message.reply("Fetching!");
   let userToSearch,
     matchID,
     matchData,
@@ -29,10 +30,10 @@ const smurfsCommand = async (message) => {
         return res.data[0].match_id;
       })
       .catch((err) => {
-        message.reply("Error occured fething match ID.");
+        reply.edit({ content: "Error occured fething match ID." });
       });
   } else {
-    message.reply("No user found. Please link using !link.");
+    reply.edit({ content: "No user found. Please link using !link." });
   }
   if (matchID) {
     matchData = await axios
@@ -41,7 +42,7 @@ const smurfsCommand = async (message) => {
         return res.data;
       })
       .catch((err) => {
-        message.reply("Error occured fething match data.");
+        reply.edit({ content: "Error occured fething match data." });
       });
   }
   if (matchData) {
@@ -57,7 +58,7 @@ const smurfsCommand = async (message) => {
             winloss.push(res.data);
           })
           .catch((err) => {
-            message.reply("Error occured fething win/loss data.");
+            reply.edit({ content: "Error occured fething win/loss data." });
           });
         await axios
           .get(
@@ -68,7 +69,7 @@ const smurfsCommand = async (message) => {
             rankTier.push(res.data.rank_tier);
           })
           .catch((err) => {
-            message.reply("Error occured fething rank data.");
+            reply.edit({ content: "Error occured fething rank data." });
           });
       } else {
         winloss.push(NaN);
@@ -98,9 +99,11 @@ const smurfsCommand = async (message) => {
             " ".repeat(12 - rank[rankTier[0]].name.length) +
             rank[rankTier[0]].name +
             " ".repeat(
-              5 -
-                (winloss[0].win / (winloss[0].win + winloss[0].lose)).toFixed(1)
-                  .length
+              6 -
+                (
+                  (winloss[0].win / (winloss[0].win + winloss[0].lose)) *
+                  100
+                ).toFixed(1).length
             ) +
             (
               (winloss[0].win / (winloss[0].win + winloss[0].lose)) *
@@ -116,9 +119,11 @@ const smurfsCommand = async (message) => {
             " ".repeat(12 - rank[rankTier[1]].name.length) +
             rank[rankTier[1]].name +
             " ".repeat(
-              5 -
-                (winloss[1].win / (winloss[1].win + winloss[1].lose)).toFixed(1)
-                  .length
+              6 -
+                (
+                  (winloss[1].win / (winloss[1].win + winloss[1].lose)) *
+                  100
+                ).toFixed(1).length
             ) +
             (
               (winloss[1].win / (winloss[1].win + winloss[1].lose)) *
@@ -134,9 +139,11 @@ const smurfsCommand = async (message) => {
             " ".repeat(12 - rank[rankTier[2]].name.length) +
             rank[rankTier[2]].name +
             " ".repeat(
-              5 -
-                (winloss[2].win / (winloss[2].win + winloss[2].lose)).toFixed(1)
-                  .length
+              6 -
+                (
+                  (winloss[2].win / (winloss[2].win + winloss[2].lose)) *
+                  100
+                ).toFixed(1).length
             ) +
             (
               (winloss[2].win / (winloss[2].win + winloss[2].lose)) *
@@ -152,9 +159,11 @@ const smurfsCommand = async (message) => {
             " ".repeat(12 - rank[rankTier[3]].name.length) +
             rank[rankTier[3]].name +
             " ".repeat(
-              5 -
-                (winloss[3].win / (winloss[3].win + winloss[3].lose)).toFixed(1)
-                  .length
+              6 -
+                (
+                  (winloss[3].win / (winloss[3].win + winloss[3].lose)) *
+                  100
+                ).toFixed(1).length
             ) +
             (
               (winloss[3].win / (winloss[3].win + winloss[3].lose)) *
@@ -170,9 +179,11 @@ const smurfsCommand = async (message) => {
             " ".repeat(12 - rank[rankTier[4]].name.length) +
             rank[rankTier[4]].name +
             " ".repeat(
-              5 -
-                (winloss[4].win / (winloss[4].win + winloss[4].lose)).toFixed(1)
-                  .length
+              6 -
+                (
+                  (winloss[4].win / (winloss[4].win + winloss[4].lose)) *
+                  100
+                ).toFixed(1).length
             ) +
             (
               (winloss[4].win / (winloss[4].win + winloss[4].lose)) *
@@ -181,7 +192,7 @@ const smurfsCommand = async (message) => {
             "%" +
             "```",
         },
-        // Dire heroes 6-7
+        // Dire heroes 6-10
         {
           name: " ",
           value:
@@ -196,9 +207,11 @@ const smurfsCommand = async (message) => {
             " ".repeat(12 - rank[rankTier[5]].name.length) +
             rank[rankTier[5]].name +
             " ".repeat(
-              5 -
-                (winloss[5].win / (winloss[5].win + winloss[5].lose)).toFixed(1)
-                  .length
+              6 -
+                (
+                  (winloss[5].win / (winloss[5].win + winloss[5].lose)) *
+                  100
+                ).toFixed(1).length
             ) +
             (
               (winloss[5].win / (winloss[5].win + winloss[5].lose)) *
@@ -214,9 +227,11 @@ const smurfsCommand = async (message) => {
             " ".repeat(12 - rank[rankTier[6]].name.length) +
             rank[rankTier[6]].name +
             " ".repeat(
-              5 -
-                (winloss[6].win / (winloss[6].win + winloss[6].lose)).toFixed(1)
-                  .length
+              6 -
+                (
+                  (winloss[6].win / (winloss[6].win + winloss[6].lose)) *
+                  100
+                ).toFixed(1).length
             ) +
             (
               (winloss[6].win / (winloss[6].win + winloss[6].lose)) *
@@ -232,9 +247,11 @@ const smurfsCommand = async (message) => {
             " ".repeat(12 - rank[rankTier[7]].name.length) +
             rank[rankTier[7]].name +
             " ".repeat(
-              5 -
-                (winloss[7].win / (winloss[7].win + winloss[7].lose)).toFixed(1)
-                  .length
+              6 -
+                (
+                  (winloss[7].win / (winloss[7].win + winloss[7].lose)) *
+                  100
+                ).toFixed(1).length
             ) +
             (
               (winloss[7].win / (winloss[7].win + winloss[7].lose)) *
@@ -250,9 +267,11 @@ const smurfsCommand = async (message) => {
             " ".repeat(12 - rank[rankTier[8]].name.length) +
             rank[rankTier[8]].name +
             " ".repeat(
-              5 -
-                (winloss[8].win / (winloss[8].win + winloss[8].lose)).toFixed(1)
-                  .length
+              6 -
+                (
+                  (winloss[8].win / (winloss[8].win + winloss[8].lose)) *
+                  100
+                ).toFixed(1).length
             ) +
             (
               (winloss[8].win / (winloss[8].win + winloss[8].lose)) *
@@ -268,9 +287,11 @@ const smurfsCommand = async (message) => {
             " ".repeat(12 - rank[rankTier[9]].name.length) +
             rank[rankTier[9]].name +
             " ".repeat(
-              5 -
-                (winloss[9].win / (winloss[9].win + winloss[9].lose)).toFixed(1)
-                  .length
+              6 -
+                (
+                  (winloss[9].win / (winloss[9].win + winloss[9].lose)) *
+                  100
+                ).toFixed(1).length
             ) +
             (
               (winloss[9].win / (winloss[9].win + winloss[9].lose)) *
@@ -282,7 +303,7 @@ const smurfsCommand = async (message) => {
       )
       .setTimestamp();
 
-    message.reply({ embeds: [exampleEmbed], files: [attachment] });
+    reply.edit({ content: "", embeds: [exampleEmbed], files: [attachment] });
   }
 };
 

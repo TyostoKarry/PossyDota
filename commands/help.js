@@ -21,6 +21,12 @@ const helpCommand = (message) => {
           "Can be given game number as parameter to display that most recent match.",
       },
       {
+        name: "!matchhistory [@user] or !mh [@user]",
+        value:
+          "Lists players stats and dotabuff links of 5 most recent games." +
+          "\nCan be given another linked player as a parameter.",
+      },
+      {
         name: "!mmr",
         value:
           "Displays a graph of gain or loss of mmr in 10 most recent games.",
