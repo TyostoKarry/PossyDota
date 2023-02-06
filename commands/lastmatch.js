@@ -8,18 +8,34 @@ const axios = require("axios");
 const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 
 const lastmatchCommand = async (message) => {
+  let userToSearch, toSearch, match, matchID, matchData, winner;
+  // Check for the command parameters
+  if (message.content.split(" ").length == 3 && message.mentions.users.size) {
+    toSearch = message.mentions.users.at(0).id;
+    if (
+      message.content.split(" ")[1] ==
+      "<@" + message.mentions.users.at(0).id + ">"
+    )
+      match = message.content.split(" ")[2];
+    else match = message.content.split(" ")[1];
+  } else if (message.content.split(" ").length == 2) {
+    if (message.mentions.users.size) {
+      toSearch = message.mentions.users.at(0).id;
+      match = 1;
+    } else {
+      match = message.content.split(" ")[1];
+      toSearch = message.author.id;
+    }
+  } else if (message.content.split(" ").length <= 1) {
+    toSearch = message.author.id;
+    match = 1;
+  } else
+    return message.reply(
+      "Incorrect command parameters. !lastmatch [match] [@user]"
+    );
   let reply = await message.reply("Fetching!");
-  let userToSearch,
-    match,
-    matchID,
-    matchData,
-    winner,
-    parameter1 = message.content.split(" ")[1];
-  if (parameter1 < 1) match = 1;
-  else if (parameter1) match = parameter1;
-  else match = 1;
   db.Users.forEach((user) => {
-    if (user.DiscordID == message.author.id) userToSearch = user;
+    if (user.DiscordID == toSearch) userToSearch = user;
   });
   if (userToSearch) {
     matchID = await axios

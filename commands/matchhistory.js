@@ -7,11 +7,16 @@ const axios = require("axios");
 const { EmbedBuilder, AttachmentBuilder, Embed } = require("discord.js");
 
 const matchhistoryCommand = async (message) => {
-  let reply = await message.reply("Fetching!");
   let userToSearch,
+    toSearch,
     matchID = [];
+  if (message.mentions.users.size) toSearch = message.mentions.users.at(0).id;
+  else if (message.content.split(" ").length <= 1) toSearch = message.author.id;
+  else
+    return message.reply("Incorrect command parameters. !matchhistory [@user]");
+  let reply = await message.reply("Fetching!");
   db.Users.forEach((user) => {
-    if (user.DiscordID == message.author.id) userToSearch = user;
+    if (user.DiscordID == toSearch) userToSearch = user;
   });
   if (userToSearch) {
     await axios
