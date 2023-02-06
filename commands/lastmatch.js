@@ -80,175 +80,16 @@ const lastmatchCommand = async (message) => {
             "    Game mode: " +
             game_mode[matchData.game_mode].name.split("_").slice(2).join(" ") +
             "    Average rank: " +
-            rank[matchID.average_rank].name,
+            rank[matchID.average_rank]?.name,
           value:
             "```" +
             "ansi\n[2;32mRadiant:              K   D   A   NET  LH/DN  GPM/XPM     DMG[0m\n" +
             //Hero 1
-            heroes[matchData.players[0].hero_id].localized_name +
-            " ".repeat(
-              19 - heroes[matchData.players[0].hero_id].localized_name.length
-            ) +
-            " ".repeat(4 - String(matchData.players[0].kills).length) +
-            matchData.players[0].kills +
-            " ".repeat(4 - String(matchData.players[0].deaths).length) +
-            matchData.players[0].deaths +
-            " ".repeat(4 - String(matchData.players[0].assists).length) +
-            matchData.players[0].assists +
-            " ".repeat(
-              5 - (matchData.players[0].net_worth / 1000).toFixed(1).length
-            ) +
-            (matchData.players[0].net_worth / 1000).toFixed(1) +
-            "k" +
-            " ".repeat(4 - String(matchData.players[0].last_hits).length) +
-            matchData.players[0].last_hits +
-            "/" +
-            matchData.players[0].denies +
-            " ".repeat(3 - String(matchData.players[0].denies).length) +
-            " ".repeat(4 - String(matchData.players[0].gold_per_min).length) +
-            matchData.players[0].gold_per_min +
-            "/" +
-            matchData.players[0].xp_per_min +
-            " ".repeat(4 - String(matchData.players[0].xp_per_min).length) +
-            " ".repeat(
-              6 -
-                String((matchData.players[0].hero_damage / 1000).toFixed(1))
-                  .length
-            ) +
-            (matchData.players[0].hero_damage / 1000).toFixed(1) +
-            "k\n" +
-            //Hero 2
-            heroes[matchData.players[1].hero_id].localized_name +
-            " ".repeat(
-              19 - heroes[matchData.players[1].hero_id].localized_name.length
-            ) +
-            " ".repeat(4 - String(matchData.players[1].kills).length) +
-            matchData.players[1].kills +
-            " ".repeat(4 - String(matchData.players[1].deaths).length) +
-            matchData.players[1].deaths +
-            " ".repeat(4 - String(matchData.players[1].assists).length) +
-            matchData.players[1].assists +
-            " ".repeat(
-              5 - (matchData.players[1].net_worth / 1000).toFixed(1).length
-            ) +
-            (matchData.players[1].net_worth / 1000).toFixed(1) +
-            "k" +
-            " ".repeat(4 - String(matchData.players[1].last_hits).length) +
-            matchData.players[1].last_hits +
-            "/" +
-            matchData.players[1].denies +
-            " ".repeat(3 - String(matchData.players[1].denies).length) +
-            " ".repeat(4 - String(matchData.players[1].gold_per_min).length) +
-            matchData.players[1].gold_per_min +
-            "/" +
-            matchData.players[1].xp_per_min +
-            " ".repeat(4 - String(matchData.players[1].xp_per_min).length) +
-            " ".repeat(
-              6 -
-                String((matchData.players[1].hero_damage / 1000).toFixed(1))
-                  .length
-            ) +
-            (matchData.players[1].hero_damage / 1000).toFixed(1) +
-            "k\n" +
-            //Hero 3
-            heroes[matchData.players[2].hero_id].localized_name +
-            " ".repeat(
-              19 - heroes[matchData.players[2].hero_id].localized_name.length
-            ) +
-            " ".repeat(4 - String(matchData.players[2].kills).length) +
-            matchData.players[2].kills +
-            " ".repeat(4 - String(matchData.players[2].deaths).length) +
-            matchData.players[2].deaths +
-            " ".repeat(4 - String(matchData.players[2].assists).length) +
-            matchData.players[2].assists +
-            " ".repeat(
-              5 - (matchData.players[2].net_worth / 1000).toFixed(1).length
-            ) +
-            (matchData.players[2].net_worth / 1000).toFixed(1) +
-            "k" +
-            " ".repeat(4 - String(matchData.players[2].last_hits).length) +
-            matchData.players[2].last_hits +
-            "/" +
-            matchData.players[2].denies +
-            " ".repeat(3 - String(matchData.players[2].denies).length) +
-            " ".repeat(4 - String(matchData.players[2].gold_per_min).length) +
-            matchData.players[2].gold_per_min +
-            "/" +
-            matchData.players[2].xp_per_min +
-            " ".repeat(4 - String(matchData.players[2].xp_per_min).length) +
-            " ".repeat(
-              6 -
-                String((matchData.players[2].hero_damage / 1000).toFixed(1))
-                  .length
-            ) +
-            (matchData.players[2].hero_damage / 1000).toFixed(1) +
-            "k\n" +
-            //Hero 4
-            heroes[matchData.players[3].hero_id].localized_name +
-            " ".repeat(
-              19 - heroes[matchData.players[3].hero_id].localized_name.length
-            ) +
-            " ".repeat(4 - String(matchData.players[3].kills).length) +
-            matchData.players[3].kills +
-            " ".repeat(4 - String(matchData.players[3].deaths).length) +
-            matchData.players[3].deaths +
-            " ".repeat(4 - String(matchData.players[3].assists).length) +
-            matchData.players[3].assists +
-            " ".repeat(
-              5 - (matchData.players[3].net_worth / 1000).toFixed(1).length
-            ) +
-            (matchData.players[3].net_worth / 1000).toFixed(1) +
-            "k" +
-            " ".repeat(4 - String(matchData.players[3].last_hits).length) +
-            matchData.players[3].last_hits +
-            "/" +
-            matchData.players[3].denies +
-            " ".repeat(3 - String(matchData.players[3].denies).length) +
-            " ".repeat(4 - String(matchData.players[3].gold_per_min).length) +
-            matchData.players[3].gold_per_min +
-            "/" +
-            matchData.players[3].xp_per_min +
-            " ".repeat(4 - String(matchData.players[3].xp_per_min).length) +
-            " ".repeat(
-              6 -
-                String((matchData.players[3].hero_damage / 1000).toFixed(1))
-                  .length
-            ) +
-            (matchData.players[3].hero_damage / 1000).toFixed(1) +
-            "k\n" +
-            //Hero 5
-            heroes[matchData.players[4].hero_id].localized_name +
-            " ".repeat(
-              19 - heroes[matchData.players[4].hero_id].localized_name.length
-            ) +
-            " ".repeat(4 - String(matchData.players[4].kills).length) +
-            matchData.players[4].kills +
-            " ".repeat(4 - String(matchData.players[4].deaths).length) +
-            matchData.players[4].deaths +
-            " ".repeat(4 - String(matchData.players[4].assists).length) +
-            matchData.players[4].assists +
-            " ".repeat(
-              5 - (matchData.players[4].net_worth / 1000).toFixed(1).length
-            ) +
-            (matchData.players[4].net_worth / 1000).toFixed(1) +
-            "k" +
-            " ".repeat(4 - String(matchData.players[4].last_hits).length) +
-            matchData.players[4].last_hits +
-            "/" +
-            matchData.players[4].denies +
-            " ".repeat(3 - String(matchData.players[4].denies).length) +
-            " ".repeat(4 - String(matchData.players[4].gold_per_min).length) +
-            matchData.players[4].gold_per_min +
-            "/" +
-            matchData.players[4].xp_per_min +
-            " ".repeat(4 - String(matchData.players[4].xp_per_min).length) +
-            " ".repeat(
-              6 -
-                String((matchData.players[4].hero_damage / 1000).toFixed(1))
-                  .length
-            ) +
-            (matchData.players[4].hero_damage / 1000).toFixed(1) +
-            "k" +
+            playerInfo(0, matchData) +
+            playerInfo(1, matchData) +
+            playerInfo(2, matchData) +
+            playerInfo(3, matchData) +
+            playerInfo(4, matchData) +
             "```",
         },
         //Dire
@@ -258,170 +99,11 @@ const lastmatchCommand = async (message) => {
             "```" +
             "ansi\n[2;31m[0m[2;31mDire:                 K   D   A   NET  LH/DN  GPM/XPM     DMG[0m\n" +
             //Hero 6
-            heroes[matchData.players[5].hero_id].localized_name +
-            " ".repeat(
-              19 - heroes[matchData.players[5].hero_id].localized_name.length
-            ) +
-            " ".repeat(4 - String(matchData.players[5].kills).length) +
-            matchData.players[5].kills +
-            " ".repeat(4 - String(matchData.players[5].deaths).length) +
-            matchData.players[5].deaths +
-            " ".repeat(4 - String(matchData.players[5].assists).length) +
-            matchData.players[5].assists +
-            " ".repeat(
-              5 - (matchData.players[5].net_worth / 1000).toFixed(1).length
-            ) +
-            (matchData.players[5].net_worth / 1000).toFixed(1) +
-            "k" +
-            " ".repeat(4 - String(matchData.players[5].last_hits).length) +
-            matchData.players[5].last_hits +
-            "/" +
-            matchData.players[5].denies +
-            " ".repeat(3 - String(matchData.players[5].denies).length) +
-            " ".repeat(4 - String(matchData.players[5].gold_per_min).length) +
-            matchData.players[5].gold_per_min +
-            "/" +
-            matchData.players[5].xp_per_min +
-            " ".repeat(4 - String(matchData.players[5].xp_per_min).length) +
-            " ".repeat(
-              6 -
-                String((matchData.players[5].hero_damage / 1000).toFixed(1))
-                  .length
-            ) +
-            (matchData.players[5].hero_damage / 1000).toFixed(1) +
-            "k\n" +
-            //Hero 7
-            heroes[matchData.players[6].hero_id].localized_name +
-            " ".repeat(
-              19 - heroes[matchData.players[6].hero_id].localized_name.length
-            ) +
-            " ".repeat(4 - String(matchData.players[6].kills).length) +
-            matchData.players[6].kills +
-            " ".repeat(4 - String(matchData.players[6].deaths).length) +
-            matchData.players[6].deaths +
-            " ".repeat(4 - String(matchData.players[6].assists).length) +
-            matchData.players[6].assists +
-            " ".repeat(
-              5 - (matchData.players[6].net_worth / 1000).toFixed(1).length
-            ) +
-            (matchData.players[6].net_worth / 1000).toFixed(1) +
-            "k" +
-            " ".repeat(4 - String(matchData.players[6].last_hits).length) +
-            matchData.players[6].last_hits +
-            "/" +
-            matchData.players[6].denies +
-            " ".repeat(3 - String(matchData.players[6].denies).length) +
-            " ".repeat(4 - String(matchData.players[6].gold_per_min).length) +
-            matchData.players[6].gold_per_min +
-            "/" +
-            matchData.players[6].xp_per_min +
-            " ".repeat(4 - String(matchData.players[6].xp_per_min).length) +
-            " ".repeat(
-              6 -
-                String((matchData.players[6].hero_damage / 1000).toFixed(1))
-                  .length
-            ) +
-            (matchData.players[6].hero_damage / 1000).toFixed(1) +
-            "k\n" +
-            //Hero 8
-            heroes[matchData.players[7].hero_id].localized_name +
-            " ".repeat(
-              19 - heroes[matchData.players[7].hero_id].localized_name.length
-            ) +
-            " ".repeat(4 - String(matchData.players[7].kills).length) +
-            matchData.players[7].kills +
-            " ".repeat(4 - String(matchData.players[7].deaths).length) +
-            matchData.players[7].deaths +
-            " ".repeat(4 - String(matchData.players[7].assists).length) +
-            matchData.players[7].assists +
-            " ".repeat(
-              5 - (matchData.players[7].net_worth / 1000).toFixed(1).length
-            ) +
-            (matchData.players[7].net_worth / 1000).toFixed(1) +
-            "k" +
-            " ".repeat(4 - String(matchData.players[7].last_hits).length) +
-            matchData.players[7].last_hits +
-            "/" +
-            matchData.players[7].denies +
-            " ".repeat(3 - String(matchData.players[7].denies).length) +
-            " ".repeat(4 - String(matchData.players[7].gold_per_min).length) +
-            matchData.players[7].gold_per_min +
-            "/" +
-            matchData.players[7].xp_per_min +
-            " ".repeat(4 - String(matchData.players[7].xp_per_min).length) +
-            " ".repeat(
-              6 -
-                String((matchData.players[7].hero_damage / 1000).toFixed(1))
-                  .length
-            ) +
-            (matchData.players[7].hero_damage / 1000).toFixed(1) +
-            "k\n" +
-            //Hero 9
-            heroes[matchData.players[8].hero_id].localized_name +
-            " ".repeat(
-              19 - heroes[matchData.players[8].hero_id].localized_name.length
-            ) +
-            " ".repeat(4 - String(matchData.players[8].kills).length) +
-            matchData.players[8].kills +
-            " ".repeat(4 - String(matchData.players[8].deaths).length) +
-            matchData.players[8].deaths +
-            " ".repeat(4 - String(matchData.players[8].assists).length) +
-            matchData.players[8].assists +
-            " ".repeat(
-              5 - (matchData.players[8].net_worth / 1000).toFixed(1).length
-            ) +
-            (matchData.players[8].net_worth / 1000).toFixed(1) +
-            "k" +
-            " ".repeat(4 - String(matchData.players[8].last_hits).length) +
-            matchData.players[8].last_hits +
-            "/" +
-            matchData.players[8].denies +
-            " ".repeat(3 - String(matchData.players[8].denies).length) +
-            " ".repeat(4 - String(matchData.players[8].gold_per_min).length) +
-            matchData.players[8].gold_per_min +
-            "/" +
-            matchData.players[8].xp_per_min +
-            " ".repeat(4 - String(matchData.players[8].xp_per_min).length) +
-            " ".repeat(
-              6 -
-                String((matchData.players[8].hero_damage / 1000).toFixed(1))
-                  .length
-            ) +
-            (matchData.players[8].hero_damage / 1000).toFixed(1) +
-            "k\n" +
-            //Hero 10
-            heroes[matchData.players[9].hero_id].localized_name +
-            " ".repeat(
-              19 - heroes[matchData.players[9].hero_id].localized_name.length
-            ) +
-            " ".repeat(4 - String(matchData.players[9].kills).length) +
-            matchData.players[9].kills +
-            " ".repeat(4 - String(matchData.players[9].deaths).length) +
-            matchData.players[9].deaths +
-            " ".repeat(4 - String(matchData.players[9].assists).length) +
-            matchData.players[9].assists +
-            " ".repeat(
-              5 - (matchData.players[9].net_worth / 1000).toFixed(1).length
-            ) +
-            (matchData.players[9].net_worth / 1000).toFixed(1) +
-            "k" +
-            " ".repeat(4 - String(matchData.players[9].last_hits).length) +
-            matchData.players[9].last_hits +
-            "/" +
-            matchData.players[9].denies +
-            " ".repeat(3 - String(matchData.players[9].denies).length) +
-            " ".repeat(4 - String(matchData.players[9].gold_per_min).length) +
-            matchData.players[9].gold_per_min +
-            "/" +
-            matchData.players[9].xp_per_min +
-            " ".repeat(4 - String(matchData.players[9].xp_per_min).length) +
-            " ".repeat(
-              6 -
-                String((matchData.players[9].hero_damage / 1000).toFixed(1))
-                  .length
-            ) +
-            (matchData.players[9].hero_damage / 1000).toFixed(1) +
-            "k" +
+            playerInfo(5, matchData) +
+            playerInfo(6, matchData) +
+            playerInfo(7, matchData) +
+            playerInfo(8, matchData) +
+            playerInfo(9, matchData) +
             "```",
         },
         {
@@ -436,5 +118,41 @@ const lastmatchCommand = async (message) => {
     reply.edit({ content: "", embeds: [exampleEmbed], files: [attachment] });
   }
 };
+
+function playerInfo(player, matchData) {
+  value =
+    heroes[matchData.players[player].hero_id].localized_name +
+    " ".repeat(
+      19 - heroes[matchData.players[player].hero_id].localized_name.length
+    ) +
+    " ".repeat(4 - String(matchData.players[player].kills).length) +
+    matchData.players[player].kills +
+    " ".repeat(4 - String(matchData.players[player].deaths).length) +
+    matchData.players[player].deaths +
+    " ".repeat(4 - String(matchData.players[player].assists).length) +
+    matchData.players[player].assists +
+    " ".repeat(
+      5 - (matchData.players[player].net_worth / 1000).toFixed(1).length
+    ) +
+    (matchData.players[player].net_worth / 1000).toFixed(1) +
+    "k" +
+    " ".repeat(4 - String(matchData.players[player].last_hits).length) +
+    matchData.players[player].last_hits +
+    "/" +
+    matchData.players[player].denies +
+    " ".repeat(3 - String(matchData.players[player].denies).length) +
+    " ".repeat(4 - String(matchData.players[player].gold_per_min).length) +
+    matchData.players[player].gold_per_min +
+    "/" +
+    matchData.players[player].xp_per_min +
+    " ".repeat(4 - String(matchData.players[player].xp_per_min).length) +
+    " ".repeat(
+      6 -
+        String((matchData.players[player].hero_damage / 1000).toFixed(1)).length
+    ) +
+    (matchData.players[player].hero_damage / 1000).toFixed(1) +
+    "k\n";
+  return value;
+}
 
 module.exports = { lastmatchCommand };

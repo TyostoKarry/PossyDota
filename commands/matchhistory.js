@@ -4,7 +4,7 @@ const lobby_type = require("../lobby_type");
 const heroes = require("../heroes");
 const rank = require("../rank");
 const axios = require("axios");
-const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
+const { EmbedBuilder, AttachmentBuilder, Embed } = require("discord.js");
 
 const matchhistoryCommand = async (message) => {
   let reply = await message.reply("Fetching!");
@@ -55,150 +55,35 @@ const matchhistoryCommand = async (message) => {
         {
           //Game 1
           name: " ",
-          value:
-            "```" +
-            heroes[matchID[0].hero_id].localized_name +
-            " ".repeat(19 - heroes[matchID[0].hero_id].localized_name.length) +
-            " ".repeat(3 - String(matchID[0].kills).length) +
-            matchID[0].kills +
-            " ".repeat(4 - String(matchID[0].deaths).length) +
-            matchID[0].deaths +
-            " ".repeat(4 - String(matchID[0].assists).length) +
-            matchID[0].assists +
-            " ".repeat(
-              15 -
-                lobby_type[matchID[0].lobby_type].name
-                  .split("_")
-                  .slice(2)
-                  .join(" ").length
-            ) +
-            lobby_type[matchID[0].lobby_type].name
-              .split("_")
-              .slice(2)
-              .join(" ") +
-            " ".repeat(15 - rank[matchID[0].average_rank].name.length) +
-            rank[matchID[0].average_rank].name +
-            "```",
+          value: gameInfo(0, matchID),
         },
         {
           //Game 1 dotabuff and game 2
           name:
             "Dotabuff link: https://www.dotabuff.com/matches/" +
             matchID[0].match_id,
-          value:
-            "```" +
-            heroes[matchID[1].hero_id].localized_name +
-            " ".repeat(19 - heroes[matchID[1].hero_id].localized_name.length) +
-            " ".repeat(3 - String(matchID[1].kills).length) +
-            matchID[1].kills +
-            " ".repeat(4 - String(matchID[1].deaths).length) +
-            matchID[1].deaths +
-            " ".repeat(4 - String(matchID[1].assists).length) +
-            matchID[1].assists +
-            " ".repeat(
-              15 -
-                lobby_type[matchID[1].lobby_type].name
-                  .split("_")
-                  .slice(2)
-                  .join(" ").length
-            ) +
-            lobby_type[matchID[1].lobby_type].name
-              .split("_")
-              .slice(2)
-              .join(" ") +
-            " ".repeat(15 - rank[matchID[1].average_rank].name.length) +
-            rank[matchID[1].average_rank].name +
-            "```",
+          value: gameInfo(1, matchID),
         },
         {
           //Game 2 dotabuff and game 3
           name:
             "Dotabuff link: https://www.dotabuff.com/matches/" +
             matchID[1].match_id,
-          value:
-            "```" +
-            heroes[matchID[2].hero_id].localized_name +
-            " ".repeat(19 - heroes[matchID[2].hero_id].localized_name.length) +
-            " ".repeat(3 - String(matchID[2].kills).length) +
-            matchID[2].kills +
-            " ".repeat(4 - String(matchID[2].deaths).length) +
-            matchID[2].deaths +
-            " ".repeat(4 - String(matchID[2].assists).length) +
-            matchID[2].assists +
-            " ".repeat(
-              15 -
-                lobby_type[matchID[2].lobby_type].name
-                  .split("_")
-                  .slice(2)
-                  .join(" ").length
-            ) +
-            lobby_type[matchID[2].lobby_type].name
-              .split("_")
-              .slice(2)
-              .join(" ") +
-            " ".repeat(15 - rank[matchID[2].average_rank].name.length) +
-            rank[matchID[2].average_rank].name +
-            "```",
+          value: gameInfo(2, matchID),
         },
         {
           //Game 3 dotabuff and game 4
           name:
             "Dotabuff link: https://www.dotabuff.com/matches/" +
             matchID[2].match_id,
-          value:
-            "```" +
-            heroes[matchID[3].hero_id].localized_name +
-            " ".repeat(19 - heroes[matchID[3].hero_id].localized_name.length) +
-            " ".repeat(3 - String(matchID[3].kills).length) +
-            matchID[3].kills +
-            " ".repeat(4 - String(matchID[3].deaths).length) +
-            matchID[3].deaths +
-            " ".repeat(4 - String(matchID[3].assists).length) +
-            matchID[3].assists +
-            " ".repeat(
-              15 -
-                lobby_type[matchID[3].lobby_type].name
-                  .split("_")
-                  .slice(2)
-                  .join(" ").length
-            ) +
-            lobby_type[matchID[3].lobby_type].name
-              .split("_")
-              .slice(2)
-              .join(" ") +
-            " ".repeat(15 - rank[matchID[3].average_rank].name.length) +
-            rank[matchID[3].average_rank].name +
-            "```",
+          value: gameInfo(3, matchID),
         },
         {
           //Game 4 dotabuff and game 5
           name:
             "Dotabuff link: https://www.dotabuff.com/matches/" +
             matchID[3].match_id,
-          value:
-            "```" +
-            heroes[matchID[4].hero_id].localized_name +
-            " ".repeat(19 - heroes[matchID[4].hero_id].localized_name.length) +
-            " ".repeat(3 - String(matchID[4].kills).length) +
-            matchID[4].kills +
-            " ".repeat(4 - String(matchID[4].deaths).length) +
-            matchID[4].deaths +
-            " ".repeat(4 - String(matchID[4].assists).length) +
-            matchID[4].assists +
-            " ".repeat(
-              15 -
-                lobby_type[matchID[4].lobby_type].name
-                  .split("_")
-                  .slice(2)
-                  .join(" ").length
-            ) +
-            lobby_type[matchID[4].lobby_type].name
-              .split("_")
-              .slice(2)
-              .join(" ") +
-            " ".repeat(15 - rank[matchID[4].average_rank].name.length) +
-            rank[matchID[4].average_rank].name +
-            "```",
+          value: gameInfo(4, matchID),
         },
         {
           //Game 5 dotabuff
@@ -213,5 +98,28 @@ const matchhistoryCommand = async (message) => {
     reply.edit({ content: "", embeds: [exampleEmbed], files: [attachment] });
   }
 };
+
+function gameInfo(game, matchID) {
+  value =
+    "```" +
+    heroes[matchID[game].hero_id].localized_name +
+    " ".repeat(19 - heroes[matchID[game].hero_id].localized_name.length) +
+    " ".repeat(3 - String(matchID[game].kills).length) +
+    matchID[game].kills +
+    " ".repeat(4 - String(matchID[game].deaths).length) +
+    matchID[game].deaths +
+    " ".repeat(4 - String(matchID[game].assists).length) +
+    matchID[game].assists +
+    " ".repeat(
+      15 -
+        lobby_type[matchID[game].lobby_type].name.split("_").slice(2).join(" ")
+          .length
+    ) +
+    lobby_type[matchID[game].lobby_type].name.split("_").slice(2).join(" ") +
+    " ".repeat(15 - String(rank[matchID[game].average_rank]?.name).length) +
+    rank[matchID[game].average_rank]?.name +
+    "```";
+  return value;
+}
 
 module.exports = { matchhistoryCommand };
