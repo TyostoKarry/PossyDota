@@ -3,6 +3,7 @@ const db = require("../db");
 const heroes = require("../heroes");
 const rank = require("../rank");
 const axios = require("axios");
+const { userSearch, getMatchID, getMatchData } = require("../myFunctions");
 const {
   EmbedBuilder,
   AttachmentBuilder,
@@ -10,73 +11,37 @@ const {
 } = require("discord.js");
 
 const smurfsCommand = async (message) => {
-  const reply = await message.reply("Fetching!");
   let userToSearch,
     matchID,
     matchData,
     winloss = [],
     rankTier = [];
-  db.Users.forEach((user) => {
-    if (user.DiscordID == message.author.id) userToSearch = user;
-  });
+
+  userToSearch = userSearch(message.author.id);
+
+  const reply = await message.reply("Fetching!");
+
   if (userToSearch) {
-    matchID = await axios
-      .get(
-        "https://api.opendota.com/api/players/" +
-          userToSearch.SteamID +
-          "/matches?limit=1"
-      )
-      .then((res) => {
-        return res.data[0].match_id;
-      })
-      .catch((err) => {
-        reply.edit({ content: "Error occured fething match ID." });
-      });
+    matchID = await getMatchID(userToSearch, 1);
+    matchID = matchID[0];
   } else {
     reply.edit({ content: "No user found. Please link using !link." });
   }
+
   if (matchID) {
-    matchData = await axios
-      .get("https://api.opendota.com/api/matches/" + matchID)
-      .then((res) => {
-        return res.data;
-      })
-      .catch((err) => {
-        reply.edit({ content: "Error occured fething match data." });
-      });
+    matchData = await getMatchData(matchID);
+  } else {
+    reply.edit({ content: "Error occured fething match data." });
   }
+
   if (matchData) {
-    for (let i = 0; i < 10; i++) {
-      if (matchData.players[i].account_id) {
-        await axios
-          .get(
-            "https://api.opendota.com/api/players/" +
-              matchData.players[i].account_id +
-              "/wl"
-          )
-          .then((res) => {
-            winloss.push(res.data);
-          })
-          .catch((err) => {
-            reply.edit({ content: "Error occured fething win/loss data." });
-          });
-        await axios
-          .get(
-            "https://api.opendota.com/api/players/" +
-              matchData.players[i].account_id
-          )
-          .then((res) => {
-            rankTier.push(res.data.rank_tier);
-          })
-          .catch((err) => {
-            reply.edit({ content: "Error occured fething rank data." });
-          });
-      } else {
-        winloss.push(NaN);
-        rankTier.push(00);
-      }
+    let winlossAndRank = await getWinLossRankData(matchData);
+    for (let player = 0; player < 20; player++) {
+      if (player % 2 == 0) winloss.push(winlossAndRank[player]);
+      else rankTier.push(winlossAndRank[player]);
     }
   }
+
   if (winloss.length == 10 && rankTier.length == 10) {
     const attachment = new AttachmentBuilder("./assets/dota2.jpg", "dota2.jpg");
     const exampleEmbed = new EmbedBuilder()
@@ -138,8 +103,8 @@ function playerInfo(player, matchData, winloss, rankTier) {
     ) +
     " ".repeat(5 - String(winloss[player].win + winloss[player].lose).length) +
     (winloss[player].win + winloss[player].lose) +
-    " ".repeat(12 - String(rank[rankTier[player]].name).length) +
-    rank[rankTier[player]].name +
+    " ".repeat(12 - String(rank[rankTier[player]]?.name).length) +
+    rank[rankTier[player]]?.name +
     " ".repeat(
       6 -
         (
@@ -153,6 +118,67 @@ function playerInfo(player, matchData, winloss, rankTier) {
     ).toFixed(1) +
     "%";
   return value;
+}
+
+async function fetchWinLoss(matchData, player) {
+  let winloss;
+  if (matchData.players[player].account_id) {
+    await axios
+      .get(
+        "https://api.opendota.com/api/players/" +
+          matchData.players[player].account_id +
+          "/wl"
+      )
+      .then((res) => {
+        winloss = res.data;
+      })
+      .catch((err) => {
+        reply.edit({ content: "Error occured fething win/loss data." });
+      });
+  } else {
+    winloss = NaN;
+  }
+  return winloss;
+}
+
+async function fetchRank(matchData, player) {
+  let rankTier;
+  if (matchData.players[player].account_id) {
+    await axios
+      .get(
+        "https://api.opendota.com/api/players/" +
+          matchData.players[player].account_id
+      )
+      .then((res) => {
+        rankTier = res.data.rank_tier;
+      })
+      .catch((err) => {
+        reply.edit({ content: "Error occured fething rank data." });
+      });
+  } else {
+    rankTier = 00;
+  }
+  return rankTier;
+}
+
+async function getWinLossRankData(matchData) {
+  let winlossAndRank;
+  const promises = [];
+
+  for (let player = 0; player < 10; player++) {
+    promises.push(fetchWinLoss(matchData, player));
+    promises.push(fetchRank(matchData, player));
+  }
+
+  winlossAndRank = Promise.all(promises)
+    .then(async (res) => {
+      return res;
+    })
+    .catch((err) => {
+      reply.edit({ content: "Error occured fething win/loss and rank data." });
+    });
+
+  return winlossAndRank;
 }
 
 module.exports = { smurfsCommand };

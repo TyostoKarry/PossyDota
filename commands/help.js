@@ -15,10 +15,11 @@ const helpCommand = (message) => {
       },
       { name: "!unlink", value: "Unlinks linked discord and steam32 ID." },
       {
-        name: "!lastmatch [match] or !lm [match]",
+        name: "!lastmatch [match] [@user] or !lm [match] [@user]",
         value:
-          "Displays basic info of last match with dotabuff link to given match.\n" +
-          "Can be given game number as parameter to display that most recent match.",
+          "Displays basic info of last match with dotabuff link to given match." +
+          "\nCan be given game number as parameter to display that most recent match." +
+          "\nAnd can be given another linked player as a parameter for their last match. ",
       },
       {
         name: "!matchhistory [@user] or !mh [@user]",

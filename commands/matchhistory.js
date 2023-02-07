@@ -4,42 +4,25 @@ const lobby_type = require("../lobby_type");
 const heroes = require("../heroes");
 const rank = require("../rank");
 const axios = require("axios");
+const { inputCheck1Param, userSearch, getMatchID } = require("../myFunctions");
 const { EmbedBuilder, AttachmentBuilder, Embed } = require("discord.js");
 
 const matchhistoryCommand = async (message) => {
   let userToSearch,
-    toSearch,
     matchID = [];
-  if (message.mentions.users.size) toSearch = message.mentions.users.at(0).id;
-  else if (message.content.split(" ").length <= 1) toSearch = message.author.id;
-  else
-    return message.reply("Incorrect command parameters. !matchhistory [@user]");
+
+  if (inputCheck1Param(message))
+    userToSearch = userSearch(inputCheck1Param(message));
+  else return;
+
   let reply = await message.reply("Fetching!");
-  db.Users.forEach((user) => {
-    if (user.DiscordID == toSearch) userToSearch = user;
-  });
+
   if (userToSearch) {
-    await axios
-      .get(
-        "https://api.opendota.com/api/players/" +
-          userToSearch.SteamID +
-          "/matches?limit=5"
-      )
-      .then((res) => {
-        matchID.push(
-          res.data[0],
-          res.data[1],
-          res.data[2],
-          res.data[3],
-          res.data[4]
-        );
-      })
-      .catch((err) => {
-        reply.edit({ content: "Error occured fething match ID." });
-      });
+    matchID = await getMatchID(userToSearch, 5);
   } else {
     reply.edit({ content: "No user found. Please link using !link." });
   }
+
   if (matchID.length == 5) {
     const attachment = new AttachmentBuilder("./assets/dota2.jpg", "dota2.jpg");
     const exampleEmbed = new EmbedBuilder()
