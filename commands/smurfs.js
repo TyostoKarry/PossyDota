@@ -4,11 +4,7 @@ const heroes = require("../heroes");
 const rank = require("../rank");
 const axios = require("axios");
 const { userSearch, getMatchID, getMatchData } = require("../myFunctions");
-const {
-  EmbedBuilder,
-  AttachmentBuilder,
-  TextInputAssertions,
-} = require("discord.js");
+const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 
 const smurfsCommand = async (message) => {
   let userToSearch,
@@ -22,14 +18,14 @@ const smurfsCommand = async (message) => {
   const reply = await message.reply("Fetching!");
 
   if (userToSearch) {
-    matchID = await getMatchID(userToSearch, 1);
+    matchID = await getMatchID(userToSearch, 1, reply);
     matchID = matchID[0];
   } else {
     reply.edit({ content: "No user found. Please link using !link." });
   }
 
   if (matchID) {
-    matchData = await getMatchData(matchID);
+    matchData = await getMatchData(matchID, reply);
   } else {
     reply.edit({ content: "Error occured fething match data." });
   }
@@ -170,7 +166,7 @@ async function getWinLossRankData(matchData) {
     promises.push(fetchRank(matchData, player));
   }
 
-  winlossAndRank = Promise.all(promises)
+  winlossAndRank = await Promise.all(promises)
     .then(async (res) => {
       return res;
     })

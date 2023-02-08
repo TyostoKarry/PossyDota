@@ -5,16 +5,12 @@ const game_mode = require("./game_mode");
 const heroes = require("./heroes");
 const rank = require("./rank");
 const axios = require("axios");
+const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 
-function inputCheck1Param(message) {
-  let param = false;
-  if (message.mentions.users.size) param = message.mentions.users.at(0).id;
-  else if (message.content.split(" ").length <= 1) param = message.author.id;
-  else message.reply("Incorrect command parameters. !matchhistory [@user]");
-  return param;
-}
-
-function inputCheck2Params(message) {
+//Checks message parameters for mentions and additional parameter
+//Returns toSearch and param in an array
+//toSearch includes mentions user.id and param can be anything.
+function inputCheck(message) {
   let param, toSearch;
   if (message.content.split(" ").length == 3 && message.mentions.users.size) {
     toSearch = message.mentions.users.at(0).id;
@@ -36,11 +32,15 @@ function inputCheck2Params(message) {
   } else if (message.content.split(" ").length == 1) {
     toSearch = message.author.id;
     param = 1;
-  } else
-    message.reply("Incorrect command parameters. !lastmatch [match] [@user]");
+  } else {
+    message.reply("Incorrect command parameters.");
+    return false;
+  }
   return [toSearch, param];
 }
 
+//Searches database for mach for a searchable user
+//Return: database use if found and false otherwise
 function userSearch(toSearch) {
   let output = false;
   db.Users.forEach((user) => {
@@ -51,7 +51,9 @@ function userSearch(toSearch) {
   return output;
 }
 
-async function getMatchID(userToSearch, matchCount) {
+//Fetches opendota api for a [matchCount] most recent match of [userToSearch]
+//Returns matchID object
+async function getMatchID(userToSearch, matchCount, reply) {
   let matchID = [];
   await axios
     .get(
@@ -70,7 +72,9 @@ async function getMatchID(userToSearch, matchCount) {
   return matchID;
 }
 
-async function getMatchData(matchID, matchCount) {
+//Fetches opendota api for a [matchID] match
+//Returns matchData object
+async function getMatchData(matchID, reply) {
   let matchData = await axios
     .get("https://api.opendota.com/api/matches/" + matchID.match_id)
     .then((res) => {
@@ -82,8 +86,82 @@ async function getMatchData(matchID, matchCount) {
   return matchData;
 }
 
-function playerInfo(player, matchData) {
+//Creates embed that includes basic match info and player stats
+//Returns embed
+function basicMatchInfoBuilder(matchData, matchID) {
+  let winner;
+  if (matchData.radiant_win) winner = "Radiant";
+  else winner = "Dire";
+  const attachment = new AttachmentBuilder("./assets/dota2.jpg", "dota2.jpg");
+  const matchInfo = new EmbedBuilder()
+    .setColor(0x0099ff)
+    .setTitle("MatchID: " + matchData.match_id)
+    .setAuthor({ name: "PössyDota", iconURL: "attachment://dota2.jpg" })
+    .addFields(
+      //Radiant
+      {
+        name:
+          "Winner: " +
+          winner +
+          "    Kills " +
+          matchData.radiant_score +
+          ":" +
+          matchData.dire_score +
+          "    Duration: " +
+          Math.floor(matchData.duration / 60) +
+          ":" +
+          (matchData.duration -
+            Math.floor(matchData.duration / 60) * 60 +
+            "\n") +
+          "Lobby type: " +
+          lobby_type[matchData.lobby_type].name.split("_").slice(2).join(" ") +
+          "    Game mode: " +
+          game_mode[matchData.game_mode].name.split("_").slice(2).join(" ") +
+          "    Average rank: " +
+          rank[matchID.average_rank]?.name,
+        value:
+          "```" +
+          "ansi\n[2;32mRadiant:              K   D   A   NET  LH/DN  GPM/XPM     DMG[0m\n" +
+          //Hero 1-5
+          playerInfo(matchData, 0) +
+          playerInfo(matchData, 1) +
+          playerInfo(matchData, 2) +
+          playerInfo(matchData, 3) +
+          playerInfo(matchData, 4) +
+          "```",
+      },
+      //Dire
+      {
+        name: " ",
+        value:
+          "```" +
+          "ansi\n[2;31m[0m[2;31mDire:                 K   D   A   NET  LH/DN  GPM/XPM     DMG[0m\n" +
+          //Hero 6-10
+          playerInfo(matchData, 5) +
+          playerInfo(matchData, 6) +
+          playerInfo(matchData, 7) +
+          playerInfo(matchData, 8) +
+          playerInfo(matchData, 9) +
+          "```",
+      },
+      {
+        name:
+          "Dotabuff link: https://www.dotabuff.com/matches/" +
+          matchData.match_id,
+        value: " ",
+      }
+    )
+    .setTimestamp();
+
+  return matchInfo;
+}
+
+//Prints out player info in the following order
+//(name\n, hero, kills, deaths, assists, networth, lastHit/deny, goldPerMin/xpPerMin, damage)
+function playerInfo(matchData, player) {
   value =
+    matchData.players[player].personaname +
+    ":\n" +
     heroes[matchData.players[player].hero_id].localized_name +
     " ".repeat(
       19 - heroes[matchData.players[player].hero_id].localized_name.length
@@ -119,10 +197,10 @@ function playerInfo(player, matchData) {
 }
 
 module.exports = {
-  inputCheck1Param,
-  inputCheck2Params,
+  inputCheck,
   userSearch,
   getMatchID,
   getMatchData,
   playerInfo,
+  basicMatchInfoBuilder,
 };
