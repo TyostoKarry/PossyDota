@@ -4,6 +4,7 @@ const lobby_type = require("../lobby_type");
 const heroes = require("../heroes");
 const rank = require("../rank");
 const axios = require("axios");
+const wait = require("node:timers/promises").setTimeout;
 const {
   inputCheck,
   userSearch,
@@ -25,9 +26,7 @@ let OverviewEmbed,
   MatchTwoEmbed,
   MatchThreeEmbed,
   MatchFourEmbed,
-  MatchFiveEmbed,
-  Attachment,
-  RowMenu;
+  MatchFiveEmbed;
 
 const matchhistoryCommand = async (message) => {
   let userToSearch,
@@ -66,7 +65,7 @@ const matchhistoryCommand = async (message) => {
   }
 
   if (matchID.length == 5) {
-    Attachment = new AttachmentBuilder("./assets/dota2.jpg", "dota2.jpg");
+    const Attachment = new AttachmentBuilder("./assets/dota2.jpg", "dota2.jpg");
 
     OverviewEmbed = RecentMatchesEmbed(userToSearch, matchID);
     MatchOneEmbed = basicMatchInfoBuilder(matchData[0], matchID[0]);
@@ -75,7 +74,7 @@ const matchhistoryCommand = async (message) => {
     MatchFourEmbed = basicMatchInfoBuilder(matchData[3], matchID[3]);
     MatchFiveEmbed = basicMatchInfoBuilder(matchData[4], matchID[4]);
 
-    RowMenu = new ActionRowBuilder().addComponents(
+    const RowMenu = new ActionRowBuilder().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId("select")
         .setPlaceholder("5 most recent matches")
@@ -113,6 +112,11 @@ const matchhistoryCommand = async (message) => {
       components: [RowMenu],
       files: [Attachment],
     });
+
+    await wait(60000);
+    reply.edit({
+      components: [],
+    });
   } else
     reply.edit({
       content: "Unknown error occured.",
@@ -124,60 +128,42 @@ client.on(Events.InteractionCreate, async (interaction) => {
   switch (interaction.values[0]) {
     case "Overview":
       interaction.message.edit({
-        content: "",
         embeds: [OverviewEmbed],
-        components: [RowMenu],
-        files: [Attachment],
       });
       interaction.deferUpdate();
       break;
 
     case "Match1":
       await interaction.message.edit({
-        content: "",
         embeds: [MatchOneEmbed],
-        components: [RowMenu],
-        files: [Attachment],
       });
       interaction.deferUpdate();
       break;
 
     case "Match2":
       await interaction.message.edit({
-        content: "",
         embeds: [MatchTwoEmbed],
-        components: [RowMenu],
-        files: [Attachment],
       });
       interaction.deferUpdate();
       break;
 
     case "Match3":
       await interaction.message.edit({
-        content: "",
         embeds: [MatchThreeEmbed],
-        components: [RowMenu],
-        files: [Attachment],
       });
       interaction.deferUpdate();
       break;
 
     case "Match4":
       await interaction.message.edit({
-        content: "",
         embeds: [MatchFourEmbed],
-        components: [RowMenu],
-        files: [Attachment],
       });
       interaction.deferUpdate();
       break;
 
     case "Match5":
       await interaction.message.edit({
-        content: "",
         embeds: [MatchFiveEmbed],
-        components: [RowMenu],
-        files: [Attachment],
       });
       interaction.deferUpdate();
       break;
