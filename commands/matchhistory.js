@@ -17,7 +17,6 @@ const {
   AttachmentBuilder,
   ActionRowBuilder,
   StringSelectMenuBuilder,
-  ComponentType,
   Events,
 } = require("discord.js");
 
@@ -29,17 +28,16 @@ let OverviewEmbed,
   MatchFiveEmbed;
 
 const matchhistoryCommand = async (message) => {
-  let userToSearch,
-    matchID = [],
+  let matchID = [],
     matchData = [];
 
-  userToSearch = userSearch(inputCheck(message)[0]);
+  let userToSearch = userSearch(inputCheck(message)[0]);
   if (!userToSearch) return;
 
-  reply = await message.reply("Fetching!");
+  let reply = await message.reply("Fetching!");
 
   if (userToSearch) {
-    matchID = await getMatchID(userToSearch, 5, reply);
+    matchID = await getMatchID(userToSearch, 5, reply, "");
   } else {
     return reply.edit({ content: "No user found. Please link using !link." });
   }

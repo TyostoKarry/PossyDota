@@ -39,7 +39,7 @@ client.once(Events.ClientReady, (c) => {
 client.on("messageCreate", (message) => {
   if (message.content == "!help") {
     help.helpCommand(message);
-  } else if (message.content.split(" ")[0] == "!link") {
+  } else if (message.content == "!link") {
     link.linkCommand(message);
   } else if (message.content == "!unlink") {
     unlink.unlinkCommand(message);
@@ -53,7 +53,7 @@ client.on("messageCreate", (message) => {
     message.content.split(" ")[0] == "!mh"
   ) {
     matchhistory.matchhistoryCommand(message);
-  } else if (message.content == "!mmr") {
+  } else if (message.content.split(" ")[0] == "!mmr") {
     mmr.mmrCommand(message);
   } else if (message.content == "!smurfs" || message.content == "!s") {
     smurfs.smurfsCommand(message);

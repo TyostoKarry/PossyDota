@@ -19,18 +19,21 @@ const helpCommand = (message) => {
         value:
           "Displays basic info of last match with dotabuff link to given match." +
           "\nCan be given game number as parameter to display that most recent match." +
-          "\nAnd can be given another linked player as a parameter for their last match. ",
+          "\nCan also be given another linked player as a parameter for their last match.",
       },
       {
         name: "!matchhistory [@user] or !mh [@user]",
         value:
           "Lists players stats and dotabuff links of 5 most recent games." +
+          "\nAccess specific game from the dropdown menu." +
           "\nCan be given another linked player as a parameter.",
       },
       {
-        name: "!mmr",
+        name: "!mmr [match count] [@user]",
         value:
-          "Displays a graph of gain or loss of mmr in 10 most recent games.",
+          "Displays a graph of gain or loss of mmr in 10 most recent games." +
+          "\nCan be given match count as parameter. Parameter 'all' displays all valid games" +
+          "\nCan also be given another linked player as a parameter for their last mmr graph.",
       },
       {
         name: "!smurfs or !s",

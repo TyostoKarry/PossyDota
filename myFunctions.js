@@ -53,14 +53,15 @@ function userSearch(toSearch) {
 
 //Fetches opendota api for a [matchCount] most recent match of [userToSearch]
 //Returns matchID object
-async function getMatchID(userToSearch, matchCount, reply) {
+async function getMatchID(userToSearch, matchCount, reply, queryParam) {
   let matchID = [];
   await axios
     .get(
       "https://api.opendota.com/api/players/" +
         userToSearch.SteamID +
         "/matches?limit=" +
-        matchCount
+        matchCount +
+        queryParam
     )
     .then((res) => {
       for (let match = 0; match < matchCount; match++)

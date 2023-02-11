@@ -15,20 +15,21 @@ const {
 const { AttachmentBuilder } = require("discord.js");
 
 const lastmatchCommand = async (message) => {
-  let userToSearch, matchID, matchData;
+  let matchID, matchData;
 
   let params = inputCheck(message);
   if (!params) return;
   let toSearch = params[0],
     match = params[1];
   if (match < 1) match = 1;
+  else if (match > 100000) matchCount = 100000;
 
-  userToSearch = userSearch(toSearch);
+  let userToSearch = userSearch(toSearch);
 
   let reply = await message.reply("Fetching!");
 
   if (userToSearch) {
-    matchID = await getMatchID(userToSearch, match, reply);
+    matchID = await getMatchID(userToSearch, match, reply, "");
     matchID = matchID[match - 1];
   } else {
     return reply.edit({ content: "No user found. Please link using !link." });
@@ -41,8 +42,7 @@ const lastmatchCommand = async (message) => {
   }
 
   if (matchData) {
-    const matchInfo = basicMatchInfoBuilder(matchData, matchID);
-    const matchInfoEmbed = matchInfo;
+    const matchInfoEmbed = basicMatchInfoBuilder(matchData, matchID);
     const matchInfoAttachment = new AttachmentBuilder(
       "./assets/dota2.jpg",
       "dota2.jpg"

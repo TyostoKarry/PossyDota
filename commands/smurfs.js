@@ -18,7 +18,7 @@ const smurfsCommand = async (message) => {
   const reply = await message.reply("Fetching!");
 
   if (userToSearch) {
-    matchID = await getMatchID(userToSearch, 1, reply);
+    matchID = await getMatchID(userToSearch, 1, reply, "");
     matchID = matchID[0];
   } else {
     reply.edit({ content: "No user found. Please link using !link." });
