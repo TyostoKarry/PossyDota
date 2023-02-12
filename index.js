@@ -37,7 +37,7 @@ client.once(Events.ClientReady, (c) => {
 client.on("messageCreate", (message) => {
   if (message.content == "!help") {
     help.helpCommand(message);
-  } else if (message.content == "!link") {
+  } else if (message.content.split(" ")[0] == "!link") {
     link.linkCommand(message);
   } else if (message.content == "!unlink") {
     unlink.unlinkCommand(message);
