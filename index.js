@@ -2,12 +2,7 @@ require("dotenv").config();
 let TOKEN = process.env.TOKEN;
 
 // Require the necessary discord.js classes
-const {
-  Client,
-  Events,
-  GatewayIntentBits,
-  messageLink,
-} = require("discord.js");
+const { Client, Events, GatewayIntentBits } = require("discord.js");
 
 // Create a new client instance
 const client = new Client({
@@ -29,6 +24,8 @@ const lastmatch = require("./commands/lastmatch");
 const matchhistory = require("./commands/matchhistory");
 const mmr = require("./commands/mmr");
 const smurfs = require("./commands/smurfs");
+const dota = require("./commands/dota");
+const { Interaction } = require("chart.js");
 
 // When the client is ready, run this code (only once)
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
@@ -58,6 +55,10 @@ client.on("messageCreate", (message) => {
   } else if (message.content == "!smurfs" || message.content == "!s") {
     smurfs.smurfsCommand(message);
   }
+});
+
+client.on("interactionCreate", async (Interaction) => {
+  if (Interaction.isChatInputCommand()) dota.dotaCommand(Interaction);
 });
 
 // Log in to Discord with your client's token
