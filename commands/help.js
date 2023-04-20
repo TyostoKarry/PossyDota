@@ -33,7 +33,13 @@ const helpCommand = (message) => {
         value:
           "Displays a graph of gain or loss of mmr in 10 most recent games." +
           "\nCan be given match count as parameter. Parameter 'all' displays all valid games" +
-          "\nCan also be given another linked player as a parameter for their last mmr graph.",
+          "\nCan also be given another linked player as a parameter for their mmr graph.",
+      },
+      {
+        name: "!matchcount [@user] or !mc [@user]:",
+        value:
+          "Displays of a bar chart of the players game count in the past week." +
+          "\nCan also be given another linked player as a parameter for their game count chart.",
       },
       {
         name: "!smurfs or !s",

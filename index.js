@@ -24,6 +24,7 @@ const lastmatch = require("./commands/lastmatch");
 const matchhistory = require("./commands/matchhistory");
 const mmr = require("./commands/mmr");
 const smurfs = require("./commands/smurfs");
+const matchcount = require("./commands/matchcount");
 const dota = require("./commands/dota");
 const { Interaction } = require("chart.js");
 
@@ -55,6 +56,11 @@ client.on("messageCreate", (message) => {
     mmr.mmrCommand(message);
   } else if (message.content == "!smurfs" || message.content == "!s") {
     smurfs.smurfsCommand(message);
+  } else if (
+    message.content.split(" ")[0] == "!matchcalendar" ||
+    message.content.split(" ")[0] == "!mc"
+  ) {
+    matchcount.matchcountCommand(message);
   }
 });
 
