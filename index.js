@@ -57,7 +57,7 @@ client.on("messageCreate", (message) => {
   } else if (message.content == "!smurfs" || message.content == "!s") {
     smurfs.smurfsCommand(message);
   } else if (
-    message.content.split(" ")[0] == "!matchcalendar" ||
+    message.content.split(" ")[0] == "!matchcount" ||
     message.content.split(" ")[0] == "!mc"
   ) {
     matchcount.matchcountCommand(message);
