@@ -50,14 +50,22 @@ const mmrCommand = async (message) => {
     const mmrChangeEmbed = new EmbedBuilder()
       .setColor(0x0099ff)
       .setTitle("Mmr change graph of " + userToSearch.DiscordName)
-      .addFields({
-        name:
-          "Gain/loss over " +
-          matchID.length +
-          " games: " +
-          mmrChange[matchID.length],
-        value: " ",
-      })
+      .addFields(
+        {
+          name: "About:",
+          value:
+            "As of patch 7.33 mmr now changes dynamically per game and is no longer predictable. " +
+            "The graph shows mmr change as it was previous of patch 7.33.",
+        },
+        {
+          name:
+            "Gain/loss over " +
+            matchID.length +
+            " games: " +
+            mmrChange[matchID.length],
+          value: " ",
+        }
+      )
       .setTimestamp();
     mmrChangeEmbed.setImage("attachment://mmrChangeImage.png");
     reply.edit({ content: "", embeds: [mmrChangeEmbed], files: [attachment] });
