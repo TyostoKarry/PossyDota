@@ -28,6 +28,7 @@ const matchcount = require("./commands/matchcount");
 const dota = require("./commands/dota");
 const update = require("./update");
 const newsChannel = require("./commands/newsChannel");
+const lastupdate = require("./commands/lastupdate");
 const { Interaction } = require("chart.js");
 
 // When the client is ready, run this code (only once)
@@ -65,15 +66,14 @@ client.on("messageCreate", async (message) => {
     matchcount.matchcountCommand(message);
   } else if (
     message.content.split(" ")[0] == "!setnewschannel" ||
-    message.content.split(" ")[0] == "!snc"
+    message.content.split(" ")[0] == "?snc"
   ) {
-    newsChannelID = await newsChannel.setNewsChannel(message);
-    console.log(newsChannelID);
+    newsChannel.setNewsChannel(message);
   } else if (
     message.content.split(" ")[0] == "!lastupdate" ||
-    message.content.split(" ")[0] == "!lu"
+    message.content.split(" ")[0] == "?lu"
   ) {
-    lastGID = await update.checkForUpdate();
+    lastupdate.getLastUpdate(message);
   }
 });
 
