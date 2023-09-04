@@ -27,3 +27,9 @@ Displays of a bar chart of the players game count in the past week. Can also be 
 
 !smurfs or !s:
 Displays ranks and games played of all the players in current match.
+
+!lastupdate or !lu
+Displays most recent news post.
+
+!setnewschannel or !snc
+Sets the channel that the command was sent from as the channel that news posts will be posted.

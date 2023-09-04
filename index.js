@@ -26,6 +26,8 @@ const mmr = require("./commands/mmr");
 const smurfs = require("./commands/smurfs");
 const matchcount = require("./commands/matchcount");
 const dota = require("./commands/dota");
+const update = require("./update");
+const newsChannel = require("./commands/newsChannel");
 const { Interaction } = require("chart.js");
 
 // When the client is ready, run this code (only once)
@@ -35,7 +37,7 @@ client.once(Events.ClientReady, (c) => {
   client.user.setActivity("!help");
 });
 
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   if (message.content == "!help") {
     help.helpCommand(message);
   } else if (message.content.split(" ")[0] == "!link") {
@@ -61,8 +63,21 @@ client.on("messageCreate", (message) => {
     message.content.split(" ")[0] == "!mc"
   ) {
     matchcount.matchcountCommand(message);
+  } else if (
+    message.content.split(" ")[0] == "!setnewschannel" ||
+    message.content.split(" ")[0] == "!snc"
+  ) {
+    newsChannelID = await newsChannel.setNewsChannel(message);
+    console.log(newsChannelID);
+  } else if (
+    message.content.split(" ")[0] == "!lastupdate" ||
+    message.content.split(" ")[0] == "!lu"
+  ) {
+    lastGID = await update.checkForUpdate();
   }
 });
+
+setInterval(async () => (lastGID = await update.checkForUpdate()), 60 * 1000);
 
 client.on("interactionCreate", async (Interaction) => {
   if (Interaction.isChatInputCommand()) dota.dotaCommand(Interaction);

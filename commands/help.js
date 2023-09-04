@@ -44,6 +44,15 @@ const helpCommand = (message) => {
       {
         name: "!smurfs or !s",
         value: "Displays match count and rank of every player in current game.",
+      },
+      {
+        name: "!lastupdate or !lu",
+        value: "Displays most recent news post.",
+      },
+      {
+        name: "!setnewschannel or !snc",
+        value:
+          "Sets the channel that the command was sent from as the channel that news posts will be posted.",
       }
     )
     .setTimestamp();
