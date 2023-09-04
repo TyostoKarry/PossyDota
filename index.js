@@ -66,12 +66,12 @@ client.on("messageCreate", async (message) => {
     matchcount.matchcountCommand(message);
   } else if (
     message.content.split(" ")[0] == "!setnewschannel" ||
-    message.content.split(" ")[0] == "?snc"
+    message.content.split(" ")[0] == "!snc"
   ) {
     newsChannel.setNewsChannel(message);
   } else if (
     message.content.split(" ")[0] == "!lastupdate" ||
-    message.content.split(" ")[0] == "?lu"
+    message.content.split(" ")[0] == "!lu"
   ) {
     lastupdate.getLastUpdate(message);
   }
