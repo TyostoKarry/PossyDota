@@ -5,11 +5,9 @@ const axios = require("axios");
 const fs = require("fs");
 
 async function checkForUpdate() {
-  console.log("a");
   if (db.Data.newsChannelId == null) {
     console.log("No newsChannelID set!");
   } else {
-    console.log("b");
     try {
       const response = await axios.get(
         "http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=570&count=1&maxlength=300&format=json"
