@@ -2,21 +2,20 @@ const { Message } = require("discord.js");
 const { client } = require("../index");
 const db = require("../db");
 const axios = require("axios");
+const Parser = require("rss-parser");
 
 async function getLastUpdate(message) {
   if (db.Data.newsChannelId == null) {
     message.reply("No newsChannelID set.");
   } else {
-    try {
-      const response = await axios.get(
-        "http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=570&count=1&maxlength=300&format=json"
+    let parser = new Parser();
+
+    (async () => {
+      let feed = await parser.parseURL(
+        "https://store.steampowered.com/feeds/news/app/570/?cc=FI&l=english&snr=1_2108_9__2107"
       );
-      let newsPost = response.data.appnews.newsitems[0].url;
-      newsPost = newsPost.replaceAll(" ", "%20");
-      message.reply(newsPost);
-    } catch (error) {
-      message.reply("Error fetching Dota 2 update:", error);
-    }
+      message.reply(feed.items[0].link);
+    })();
   }
 }
 

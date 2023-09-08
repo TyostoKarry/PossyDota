@@ -16,6 +16,7 @@
     "chartjs-node-canvas": "^4.1.6",
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
-    "node-fetch": "^3.3.0"
+    "node-fetch": "^3.3.0",
+    "rss-parser": "^3.13.0"
   }
 }

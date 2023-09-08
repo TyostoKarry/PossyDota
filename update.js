@@ -1,32 +1,28 @@
-const { Message } = require("discord.js");
 const { client } = require("./index");
 const db = require("./db");
-const axios = require("axios");
 const fs = require("fs");
+const Parser = require("rss-parser");
 
 async function checkForUpdate() {
   if (db.Data.newsChannelId == null) {
     console.log("No newsChannelID set!");
   } else {
-    try {
-      const response = await axios.get(
-        "http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=570&count=1&maxlength=300&format=json"
+    let parser = new Parser();
+
+    (async () => {
+      let feed = await parser.parseURL(
+        "https://store.steampowered.com/feeds/news/app/570/?cc=FI&l=english&snr=1_2108_9__2107"
       );
-      const updatedGID = response.data.appnews.newsitems[0].gid;
+      const updatedGID = feed.items[0].link.split("/")[7];
       if (updatedGID != db.Data.gid) {
-        let newsPost = response.data.appnews.newsitems[0].url;
-        newsPost = newsPost.replaceAll(" ", "%20");
+        const channel = client.channels.cache.get(db.Data.newsChannelId);
+        channel.send(feed.items[0].link);
         db.Data.gid = updatedGID;
         fs.writeFile("./db.json", JSON.stringify(db, null, 2), function (err) {
           if (err) throw err;
         });
-        const channel = client.channels.cache.get(db.Data.newsChannelId);
-        channel.send(newsPost);
       }
-    } catch (error) {
-      const channel = client.channels.cache.get(db.Data.newsChannelId);
-      channel.send("Error fetching Dota 2 update:", error);
-    }
+    })();
   }
 }
 
