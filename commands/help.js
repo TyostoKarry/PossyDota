@@ -8,12 +8,12 @@ const helpCommand = (message) => {
     .setTitle("Commands")
     .setAuthor({ name: "PössyDota", iconURL: "attachment://dota2.jpg" })
     .addFields(
-      { name: "!help", value: "Displays usable commands." },
+      { name: "!help", value: "Displays available commands and their usage." },
       {
-        name: "!link Steam32ID",
-        value: "Links your discord user to a steam32 ID.",
+        name: "!link [Steam32ID]",
+        value: "Links your Discord account to a Steam32 ID.",
       },
-      { name: "!unlink", value: "Unlinks linked discord and steam32 ID." },
+      { name: "!unlink", value: "Deletes the linked Steam32 ID from the Discord account." },
       {
         name: "!lastmatch [match] [@user] or !lm [match] [@user]",
         value:
@@ -43,7 +43,7 @@ const helpCommand = (message) => {
       },
       {
         name: "!smurfs or !s",
-        value: "Displays match count and rank of every player in current game.",
+        value: "Displays ranks and games played of all the players in the previous match.",
       },
       {
         name: "!lastupdate or !lu",
@@ -52,7 +52,7 @@ const helpCommand = (message) => {
       {
         name: "!setnewschannel or !snc",
         value:
-          "Sets the channel that the command was sent from as the channel that news posts will be posted.",
+          "Sets the channel that the command was sent from as the channel for news posts.",
       }
     )
     .setTimestamp();
