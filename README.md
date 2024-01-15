@@ -68,7 +68,7 @@ Sets the channel that the command was sent from as the channel for news posts.
 
 ### Create Discord bot
 
-Create new application on Discord Developer Portal. Under Settings section on the Bot View reset token and copy the newly generated token to clipboard. Invite the bot to desired discord server.
+Create new application on Discord Developer Portal. Under Settings section on the Bot view reset token and copy the newly generated token to clipboard. Invite the bot to desired discord server.
 
 ### Setting up locally
 
@@ -85,7 +85,9 @@ PossyDota/
 
 On the `.env` paste the Token of your bot as a TOKEN.
 
-`TOKEN=YOUR_BOT_TOKEN`
+```
+TOKEN=YOUR_BOT_TOKEN
+```
 
 On the `db.json` paste the following code to set up your database.
 
