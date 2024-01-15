@@ -42,6 +42,8 @@ Usage examples:
 - `!mmr all` - Shows MMR graph for all valid games.
 - `!mmr 5 @friend` - Shows MMR graph for the linked friend's last 5 games.
 
+NOTE: As of patch 7.33 mmr now changes dynamically per game and is no longer predictable. The graph shows mmr change as it was previous of patch 7.33.
+
 ### `!matchcount [@user]` or `!mc [@user]`
 
 Displays a bar chart of the player's game count in the past week.  
@@ -61,3 +63,45 @@ Displays the most recent news post.
 ### `!setnewschannel` or `!snc`
 
 Sets the channel that the command was sent from as the channel for news posts.
+
+## Getting started
+
+### Create Discord bot
+
+Create new application on Discord Developer Portal. Under Settings section on the Bot View reset token and copy the newly generated token to clipboard. Invite the bot to desired discord server.
+
+### Setting up locally
+
+Download node. Fork this repository. Create two new files under PossyDota, `.env` and `db.json`.
+
+```
+PossyDota/
+├──...
+└──.env
+└──...
+└──db.json
+└──...
+```
+
+On the `.env` paste the Token of your bot as a TOKEN.
+
+`TOKEN=YOUR_BOT_TOKEN`
+
+On the `db.json` paste the following code to set up your database.
+
+```
+{
+  "Users": [],
+  "Data": {
+    "gid": "",
+    "newsChannelId": ""
+  }
+}
+```
+
+### Running locally
+
+```
+npm install
+npm run dev
+```
