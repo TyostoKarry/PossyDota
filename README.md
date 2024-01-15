@@ -42,7 +42,7 @@ Usage examples:
 - `!mmr all` - Shows MMR graph for all valid games.
 - `!mmr 5 @friend` - Shows MMR graph for the linked friend's last 5 games.
 
-NOTE: As of patch 7.33 mmr now changes dynamically per game and is no longer predictable. The graph shows mmr change as it was previous of patch 7.33.
+**NOTE:** As of patch 7.33 mmr now changes dynamically per game and is no longer predictable. The graph shows mmr change as it was previous of patch 7.33.
 
 ### `!matchcount [@user]` or `!mc [@user]`
 
